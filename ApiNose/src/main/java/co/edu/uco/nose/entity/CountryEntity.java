@@ -1,5 +1,7 @@
 package co.edu.uco.nose.entity;
 
+//Me falta jakarta con @entity y @Table
+
 import java.util.UUID;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
@@ -7,7 +9,6 @@ import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 public class CountryEntity {
 
     private UUID id;
-
     private String name;
 
     public CountryEntity() {

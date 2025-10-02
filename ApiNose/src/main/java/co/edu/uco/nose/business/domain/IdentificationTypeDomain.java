@@ -12,12 +12,12 @@ public final class IdentificationTypeDomain extends Domain {
         setName(TextHelper.getDefault());
     }
 
-    public IdentificationTypeDomain(UUID id) {
+    public IdentificationTypeDomain(final UUID id) {
         super(id);
         setName(TextHelper.getDefault());
     }
 
-    public IdentificationTypeDomain(UUID id, String name) {
+    public IdentificationTypeDomain(final UUID id,final String name) {
         super(id);
         setName(name);
     }
