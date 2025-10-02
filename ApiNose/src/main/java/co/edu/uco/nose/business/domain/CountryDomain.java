@@ -5,7 +5,7 @@ import java.util.UUID;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
-public class CountryDomain extends Domain {
+public final class CountryDomain extends Domain {
 	
 	private String name;
 	
