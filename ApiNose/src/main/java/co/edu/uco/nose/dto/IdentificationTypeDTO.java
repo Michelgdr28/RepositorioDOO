@@ -4,32 +4,31 @@ import java.util.UUID;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
-public class CountryDTO {
+public class IdentificationTypeDTO {
     private UUID id;
     private String name;
 
-    public CountryDTO() {
+    public IdentificationTypeDTO() {
         this.id = UUIDHelper.getUUIDHelper().getDefault();
         this.name = TextHelper.getDefault();
     }
 
-    public CountryDTO(final UUID id, final String name) {
+    public IdentificationTypeDTO(final UUID id, final String name) {
         this.id = UUIDHelper.getUUIDHelper().getDefault(id);
         this.name = TextHelper.getDefaultWithTrim(name);
     }
 
     public UUID getId() { 
-    	return id; 
+    	return id;
     	}
     public void setId(UUID id) { 
-    	this.id = UUIDHelper.getUUIDHelper().getDefault(id);
+    	this.id = UUIDHelper.getUUIDHelper().getDefault(id); 
     	}
 
-    public String getName() { 
-    	return name;
+    public String getName() {
+    	return name; 
     	}
-    public void setName(String name) { 
-    	this.name = TextHelper.getDefaultWithTrim(name); 
+    public void setName(String name) {
+    	this.name = TextHelper.getDefaultWithTrim(name);
     	}
 }
-
