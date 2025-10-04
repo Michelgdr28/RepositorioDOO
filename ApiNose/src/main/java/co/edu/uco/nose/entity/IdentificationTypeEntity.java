@@ -1,23 +1,23 @@
-package co.edu.uco.nose.dto;
+package co.edu.uco.nose.entity;
 
 import java.util.UUID;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
-public final class IdentificationTypeDTO extends DTO {
+public final class IdentificationTypeEntity extends Entity {
     private String name;
 
-    public IdentificationTypeDTO() {
+    public IdentificationTypeEntity() {
         super(UUIDHelper.getUUIDHelper().getDefault());
         setName(TextHelper.getDefault());
     }
 
-    public IdentificationTypeDTO(final UUID id) {
+    public IdentificationTypeEntity(final UUID id) {
         super(id);
         setName(TextHelper.getDefault());
     }
 
-    public IdentificationTypeDTO(final UUID id,final String name) {
+    public IdentificationTypeEntity(final UUID id,final String name) {
         super(id);
         setName(name);
     }
@@ -29,4 +29,3 @@ public final class IdentificationTypeDTO extends DTO {
     	this.name = TextHelper.getDefaultWithTrim(name);
     	}
 }
-

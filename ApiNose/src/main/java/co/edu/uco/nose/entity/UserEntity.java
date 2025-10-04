@@ -1,62 +1,62 @@
-package co.edu.uco.nose.dto;
+package co.edu.uco.nose.entity;
 
 import java.util.UUID;
 
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
-public final class UserDTO extends DTO {
+public final class UserEntity extends Entity {
 
-    private IdentificationTypeDTO identificationType;
+    private IdentificationTypeEntity identificationType;
     private String identificationNumber;
     private String firstName;
     private String secondName;
     private String firstLastName;
     private String secondLastName;
-    private CityDTO residenceCity;
+    private CityEntity residenceCity;
     private String email;
     private String mobilePhone;
     private boolean emailConfirmed;
     private boolean mobilePhoneConfirmed;
 
-    public UserDTO() {
+    public UserEntity() {
         super(UUIDHelper.getUUIDHelper().getDefault());
-        setIdentificationType(new IdentificationTypeDTO());
+        setIdentificationType(new IdentificationTypeEntity());
         setIdentificationNumber(TextHelper.getDefault());
         setFirstName(TextHelper.getDefault());
         setSecondName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
-        setResidenceCity(new CityDTO());
+        setResidenceCity(new CityEntity());
         setEmail(TextHelper.getDefault());
         setMobilePhone(TextHelper.getDefault());
         setEmailConfirmed(false);
         setMobilePhoneConfirmed(false);
     }
 
-    public UserDTO(final UUID id) {
+    public UserEntity(final UUID id) {
         super(id);
-        setIdentificationType(new IdentificationTypeDTO());
+        setIdentificationType(new IdentificationTypeEntity());
         setIdentificationNumber(TextHelper.getDefault());
         setFirstName(TextHelper.getDefault());
         setSecondName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
-        setResidenceCity(new CityDTO());
+        setResidenceCity(new CityEntity());
         setEmail(TextHelper.getDefault());
         setMobilePhone(TextHelper.getDefault());
         setEmailConfirmed(false);
         setMobilePhoneConfirmed(false);
     }
 
-    public UserDTO(final UUID id,
-                      final IdentificationTypeDTO identificationType,
+    public UserEntity(final UUID id,
+                      final IdentificationTypeEntity identificationType,
                       final String identificationNumber,
                       final String firstName,
                       final String secondName,
                       final String firstLastName,
                       final String secondLastName,
-                      final CityDTO residenceCity,
+                      final CityEntity residenceCity,
                       final String email,
                       final String mobilePhone,
                       final boolean emailConfirmed,
@@ -75,12 +75,12 @@ public final class UserDTO extends DTO {
         setMobilePhoneConfirmed(mobilePhoneConfirmed);
     }
 
-    public IdentificationTypeDTO getIdentificationType() {
+    public IdentificationTypeEntity getIdentificationType() {
         return identificationType;
     }
 
-    public void setIdentificationType(final IdentificationTypeDTO identificationType) {
-        this.identificationType = (identificationType == null) ? new IdentificationTypeDTO() : identificationType;
+    public void setIdentificationType(final IdentificationTypeEntity identificationType) {
+        this.identificationType = (identificationType == null) ? new IdentificationTypeEntity() : identificationType;
     }
 
     public String getIdentificationNumber() {
@@ -123,12 +123,12 @@ public final class UserDTO extends DTO {
         this.secondLastName = TextHelper.getDefaultWithTrim(secondLastName);
     }
 
-    public CityDTO getResidenceCity() {
+    public CityEntity getResidenceCity() {
         return residenceCity;
     }
 
-    public void setResidenceCity(final CityDTO residenceCity) {
-        this.residenceCity = (residenceCity == null) ? new CityDTO() : residenceCity;
+    public void setResidenceCity(final CityEntity residenceCity) {
+        this.residenceCity = (residenceCity == null) ? new CityEntity() : residenceCity;
     }
 
     public String getEmail() {
@@ -163,4 +163,5 @@ public final class UserDTO extends DTO {
         this.mobilePhoneConfirmed = mobilePhoneConfirmed;
     }
 }
+
 

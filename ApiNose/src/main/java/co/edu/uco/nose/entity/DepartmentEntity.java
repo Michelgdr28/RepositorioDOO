@@ -1,38 +1,38 @@
-package co.edu.uco.nose.dto;
+package co.edu.uco.nose.entity;
 
 import java.util.UUID;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
-public final class DepartmentDTO extends DTO {
+public final class DepartmentEntity extends Entity {
     
-    private CountryDTO country;
+    private CountryEntity country;
     private String name;
 
-    public DepartmentDTO() {
+    public DepartmentEntity() {
         super(UUIDHelper.getUUIDHelper().getDefault());
-        setCountry(new CountryDTO());
+        setCountry(new CountryEntity());
         setName(TextHelper.getDefault());
     }
 
-    public DepartmentDTO(final UUID id) {
+    public DepartmentEntity(final UUID id) {
         super(id);
-        setCountry(new CountryDTO());
+        setCountry(new CountryEntity());
         setName(TextHelper.getDefault());
     }
 
-    public DepartmentDTO(final UUID id, final CountryDTO country,final String name) {
+    public DepartmentEntity(final UUID id, final CountryEntity country,final String name) {
         super(id);
         setCountry(country);
         setName(name);
     }
 
-    public CountryDTO getCountry() { 
+    public CountryEntity getCountry() { 
         return country;
     }
 
-    public void setCountry(final CountryDTO country) {
-        this.country = (country == null) ? new CountryDTO() : country;
+    public void setCountry(final CountryEntity country) {
+        this.country = (country == null) ? new CountryEntity() : country;
     }
 
     public String getName() { 
