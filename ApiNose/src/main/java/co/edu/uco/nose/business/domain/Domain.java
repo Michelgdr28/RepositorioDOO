@@ -1,7 +1,6 @@
 package co.edu.uco.nose.business.domain;
 
 import java.util.UUID;
-
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
 class Domain {
