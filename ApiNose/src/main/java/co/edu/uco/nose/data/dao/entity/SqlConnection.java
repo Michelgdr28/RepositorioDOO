@@ -1,11 +1,9 @@
 package co.edu.uco.nose.data.dao.entity;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
-import co.edu.uco.nose.crosscuting.exception.NoseException;
-import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
-import co.edu.uco.nose.crosscuting.messagescatalog.MessagesEnum;
+import co.edu.uco.nose.crosscuting.helper.SqlConnectionHelper;
+
 
 public abstract class SqlConnection {
 	
@@ -17,49 +15,8 @@ public abstract class SqlConnection {
 	public Connection getConnection() {
 		return connection;
 	}
-	public void setConnection (final Connection connection) {
-		if (ObjectHelper.isNull(connection)) {
-			var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_IS_EMPTY.getContent();
-			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_IS_EMPTY.getContent();
-			throw NoseException.create(userMessage,technicalMessage);
-		}
-		try {
-			if (connection.isClosed()) {
-				var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_IS_CLOSED.getContent();
-				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_IS_CLOSED.getContent();
-				throw NoseException.create(userMessage,technicalMessage);
-			}
-		}catch (final SQLException exception) {
-			var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS.getContent();
-			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS.getContent();
-			throw NoseException.create(userMessage,technicalMessage);
-		}
-		
+	private void setConnection(final Connection connection) {
+		SqlConnectionHelper.ensureConnectionIsOpen(connection);
 		this.connection = connection;
-	}
-
-	public void validateTransactionActive() {
-		if (ObjectHelper.isNull(connection)) {
-			var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_IS_EMPTY.getContent();
-			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_IS_EMPTY.getContent();
-			throw NoseException.create(userMessage, technicalMessage);
-		}
-		try {
-			if (connection.isClosed()) {
-				var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_IS_CLOSED.getContent();
-				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_IS_CLOSED.getContent();
-				throw NoseException.create(userMessage, technicalMessage);
-			}
-			if (connection.getAutoCommit()) {
-				var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_NOT_IN_TRANSACTION.getContent();
-				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_NOT_IN_TRANSACTION.getContent();
-				throw NoseException.create(userMessage, technicalMessage);
-			}
-		} catch (final SQLException exception ) {
-			var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS.getContent();
-			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS.getContent();
-			throw NoseException.create(userMessage, technicalMessage);
 		}
 	}
-
-}
