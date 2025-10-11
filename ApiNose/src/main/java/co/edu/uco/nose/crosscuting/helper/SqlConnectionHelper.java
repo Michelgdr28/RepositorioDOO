@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.crosscuting.messagescatalog.MessagesEnum;
 
+public class SqlConnectionHelper {
+
 public static Connection setConnection(Connection connection) {
 	if(ObjectHelper.isNull(connection)) {
 		var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_IS_EMPTY.getContent();
