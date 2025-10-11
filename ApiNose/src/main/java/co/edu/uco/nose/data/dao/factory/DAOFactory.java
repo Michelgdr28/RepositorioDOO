@@ -32,9 +32,9 @@ public abstract class DAOFactory {
 
 	public abstract CountryDAO getCountryDAO();
 
-	public abstract IdTypeDAO getIdType();
+	public abstract IdentificationTypeDAO getIdType();
 
-	public abstract StateDAO getStateDAO();
+	public abstract DepartmentDAO getStateDAO();
 
 	public abstract UserDAO getUserDAO();
 
