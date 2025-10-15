@@ -98,5 +98,4 @@ public abstract class DAOFactory {
 			var technicalMessage = "";
 			throw NoseException.create(exception, userMessage, technicalMessage);
 	}
-
 }

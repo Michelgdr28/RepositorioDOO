@@ -1,7 +1,10 @@
 package co.edu.uco.nose.data.dao.entity.sqlserver;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +23,7 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 
 	public UserSqlServerDAO(Connection connection) {
 		super(connection);
-		// TODO Auto-generated constructor stub
+
 	}
 	@Override
 	public void create(UserEntity entity) {
@@ -60,18 +63,7 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 			var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar el ";
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		}
-	}
 
-	@Override
-	public List<UserEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<UserEntity> findByFilter(UserEntity filterEntity) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -114,7 +106,7 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 			try(var resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
 					
-					var idType = new IdTypeEntity();
+					var idType = new IdentificationTypeEntity();
 					idType.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idTipoIdentificacion")));
 					idType.setName(resultSet.getString("nombreTipoIdentificacion"));
 					
@@ -122,7 +114,7 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 					country.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idPaisDepartamentoCiudadResidencia")));
 					country.setName(resultSet.getString("nombrePaisDepartamentoCiudadResidencia"));
 					
-					var state = new StateEntity();
+					var state = new DepartmentEntity();
 					state.setCountry(country);
 					state.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idDepartamentoCiudadResidencia")));
 					state.setName(resultSet.getString("nombreDepartamentoCiudadResidencia"));
@@ -227,93 +219,214 @@ SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 			var userMessage = "Se ha presentado un problema INESPERADO tratando de eliminar la informacion";
 			var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar el ";
 			throw NoseException.create(exception, userMessage, technicalMessage);
+		}
     }
+	@Override
+	public List<UserEntity> finAll() {
+	    SqlConnectionHelper.ensureConnectionIsOpen(getConnection());
 
-    @Override
-    public List<UserEntity> findByfilter(UserEntity filterEntity) {
-        StringBuilder sql = new StringBuilder("SELECT * FROM [User] WHERE 1=1");
-        List<Object> params = new ArrayList<>();
-        if (filterEntity.getId() != null) {
-            sql.append(" AND id=?");
-            params.add(filterEntity.getId());
-        }
-        if (!filterEntity.getIdNumber().isEmpty()) {
-            sql.append(" AND id_number=?");
-            params.add(filterEntity.getIdNumber());
-        }
-        if (!filterEntity.getFirstName().isEmpty()) {
-            sql.append(" AND first_name=?");
-            params.add(filterEntity.getFirstName());
-        }
-        if (!filterEntity.getSecondName().isEmpty()) {
-            sql.append(" AND second_name=?");
-            params.add(filterEntity.getSecondName());
-        }
-        if (!filterEntity.getLastName().isEmpty()) {
-            sql.append(" AND last_name=?");
-            params.add(filterEntity.getLastName());
-        }
-        if (!filterEntity.getSecondLastName().isEmpty()) {
-            sql.append(" AND second_last_name=?");
-            params.add(filterEntity.getSecondLastName());
-        }
-        if (!filterEntity.getEmail().isEmpty()) {
-            sql.append(" AND email=?");
-            params.add(filterEntity.getEmail());
-        }
-        if (!filterEntity.getPhoneNumber().isEmpty()) {
-            sql.append(" AND phone_number=?");
-            params.add(filterEntity.getPhoneNumber());
-        }
-        if (filterEntity.getIdentificationType() != null && filterEntity.getIdentificationType().getId() != null) {
-            sql.append(" AND identification_type_id=?");
-            params.add(filterEntity.getIdentificationType().getId());
-        }
-        if (filterEntity.getCity() != null && filterEntity.getCity().getId() != null) {
-            sql.append(" AND city_id=?");
-            params.add(filterEntity.getCity().getId());
-        }
-        if (filterEntity.isEmailConfirmed()) {
-            sql.append(" AND email_confirmed=?");
-            params.add(true);
-        }
-        if (filterEntity.isPhoneConfirmed()) {
-            sql.append(" AND phone_confirmed=?");
-            params.add(true);
-        }
-        List<UserEntity> users = new ArrayList<>();
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql.toString())) {
-            for (int i = 0; i < params.size(); i++) {
-                stmt.setObject(i + 1, params.get(i));
-            }
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    users.add(mapResultSetToUserEntity(rs));
-                }
-            }
-        } catch (SQLException exception) {
-            var userMessage = MessagesEnum.USER_ERROR_SQL_EXECUTING_STATEMENT.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_STATEMENT.getContent();
-            throw NoseException.create(userMessage, technicalMessage);
-        }
-        return users;
-    }
+	    final var sql = new StringBuilder();
+	    sql.append("SELECT  u.id,");
+	    sql.append("        ti.id AS idTipoIdentificacion,");
+	    sql.append("        ti.nombre AS nombreTipoIdentificacion,");
+	    sql.append("        u.numeroIdentificacion,");
+	    sql.append("        u.primerNombre,");
+	    sql.append("        u.segundoNombre,");
+	    sql.append("        u.primerApellido,");
+	    sql.append("        u.segundoApellido,");
+	    sql.append("        c.id AS idCiudadResidencia,");
+	    sql.append("        c.nombre AS nombreCiudadResidencia,");
+	    sql.append("        d.id AS idDepartamentoCiudadResidencia,");
+	    sql.append("        d.nombre AS nombreDepartamentoCiudadResidencia,");
+	    sql.append("        p.id AS idPaisDepartamentoCiudadResidencia,");
+	    sql.append("        p.nombre AS nombrePaisDepartamentoCiudadResidencia,");
+	    sql.append("        u.correoElectronico,");
+	    sql.append("        u.numeroTelefonoMovil,");
+	    sql.append("        u.correoElectronicoConfirmado,");
+	    sql.append("        u.numeroTelefonoMovilConfirmado");
+	    sql.append(" FROM Usuario AS u");
+	    sql.append(" INNER JOIN Tipoidentificacion AS ti ON u.tipoIdentificacion = ti.id");
+	    sql.append(" INNER JOIN Ciudad AS c ON u.ciudadResidencia = c.id");
+	    sql.append(" INNER JOIN Departamento AS d ON c.departamento = d.id");
+	    sql.append(" INNER JOIN Pais AS p ON d.pais = p.id");
 
-    private UserEntity mapResultSetToUserEntity(ResultSet rs) throws SQLException {
-        UserEntity user = new UserEntity();
-        user.setId((UUID) rs.getObject("id"));
-        user.setIdNumber(rs.getString("id_number"));
-        user.setFirstName(rs.getString("first_name"));
-        user.setSecondName(rs.getString("second_name"));
-        user.setLastName(rs.getString("last_name"));
-        user.setSecondLastName(rs.getString("second_last_name"));
-        user.setEmail(rs.getString("email"));
-        user.setPhoneNumber(rs.getString("phone_number"));
-        user.setIdentificationType(new IdentificationTypeEntity((UUID) rs.getObject("identification_type_id")));
-        user.setCity(new CityEntity((UUID) rs.getObject("city_id")));
-        user.setEmailConfirmed(rs.getBoolean("email_confirmed"));
-        user.setPhoneConfirmed(rs.getBoolean("phone_confirmed"));
-        return user;
-    }
+	    final var users = new ArrayList<UserEntity>();
 
+	    try (var preparedStatement = getConnection().prepareStatement(sql.toString());
+	         var rs = preparedStatement.executeQuery()) {
+
+	        while (rs.next()) {
+	            users.add(mapResultSetToUserEntity(rs));
+	        }
+	        return users;
+
+	    } catch (final SQLException exception) {
+	        var userMessage = "Se ha presentado un problema tratando de recuperar la lista de usuarios";
+	        var technicalMessage = "Se ha presentado un problema al ejecutar la consulta SELECT de usuarios: " + exception.getMessage();
+	        throw NoseException.create(exception, userMessage, technicalMessage);
+	    } catch (final Exception exception) {
+	        var userMessage = "Se ha presentado un problema INESPERADO tratando de recuperar la lista de usuarios";
+	        var technicalMessage = "Se ha presentado un error inesperado al procesar la consulta de usuarios: " + exception.getMessage();
+	        throw NoseException.create(exception, userMessage, technicalMessage);
+	    }
+	}
+
+	@Override
+	public List<UserEntity> findByfilter(UserEntity filterEntity) {
+	    SqlConnectionHelper.ensureConnectionIsOpen(getConnection());
+
+	    final var sb = new StringBuilder();
+	    sb.append("SELECT  u.id,");
+	    sb.append("        ti.id AS idTipoIdentificacion,");
+	    sb.append("        ti.nombre AS nombreTipoIdentificacion,");
+	    sb.append("        u.numeroIdentificacion,");
+	    sb.append("        u.primerNombre,");
+	    sb.append("        u.segundoNombre,");
+	    sb.append("        u.primerApellido,");
+	    sb.append("        u.segundoApellido,");
+	    sb.append("        c.id AS idCiudadResidencia,");
+	    sb.append("        c.nombre AS nombreCiudadResidencia,");
+	    sb.append("        d.id AS idDepartamentoCiudadResidencia,");
+	    sb.append("        d.nombre AS nombreDepartamentoCiudadResidencia,");
+	    sb.append("        p.id AS idPaisDepartamentoCiudadResidencia,");
+	    sb.append("        p.nombre AS nombrePaisDepartamentoCiudadResidencia,");
+	    sb.append("        u.correoElectronico,");
+	    sb.append("        u.numeroTelefonoMovil,");
+	    sb.append("        u.correoElectronicoConfirmado,");
+	    sb.append("        u.numeroTelefonoMovilConfirmado");
+	    sb.append(" FROM Usuario AS u");
+	    sb.append(" INNER JOIN Tipoidentificacion AS ti ON u.tipoIdentificacion = ti.id");
+	    sb.append(" INNER JOIN Ciudad AS c ON u.ciudadResidencia = c.id");
+	    sb.append(" INNER JOIN Departamento AS d ON c.departamento = d.id");
+	    sb.append(" INNER JOIN Pais AS p ON d.pais = p.id");
+	    sb.append(" WHERE 1 = 1");
+
+	    final var params = new ArrayList<Object>();
+	    final var defaultUUID = UUIDHelper.getUUIDHelper().getDefault();
+
+	    if (filterEntity != null) {
+	        if (filterEntity.getId() != null && !filterEntity.getId().equals(defaultUUID)) {
+	            sb.append(" AND u.id = ?");
+	            params.add(filterEntity.getId());
+	        }
+	        if (filterEntity.getIdentificationType() != null && filterEntity.getIdentificationType().getId() != null
+	                && !filterEntity.getIdentificationType().getId().equals(defaultUUID)) {
+	            sb.append(" AND u.tipoIdentificacion = ?");
+	            params.add(filterEntity.getIdentificationType().getId());
+	        }
+	        if (filterEntity.getIdNumber() != null && !filterEntity.getIdNumber().isBlank()) {
+	            sb.append(" AND u.numeroIdentificacion = ?");
+	            params.add(filterEntity.getIdNumber());
+	        }
+	        if (filterEntity.getFirstName() != null && !filterEntity.getFirstName().isBlank()) {
+	            sb.append(" AND u.primerNombre = ?");
+	            params.add(filterEntity.getFirstName());
+	        }
+	        if (filterEntity.getSecondName() != null && !filterEntity.getSecondName().isBlank()) {
+	            sb.append(" AND u.segundoNombre = ?");
+	            params.add(filterEntity.getSecondName());
+	        }
+	        if (filterEntity.getLastName() != null && !filterEntity.getLastName().isBlank()) {
+	            sb.append(" AND u.primerApellido = ?");
+	            params.add(filterEntity.getLastName());
+	        }
+	        if (filterEntity.getSecondLastName() != null && !filterEntity.getSecondLastName().isBlank()) {
+	            sb.append(" AND u.segundoApellido = ?");
+	            params.add(filterEntity.getSecondLastName());
+	        }
+	        if (filterEntity.getCity() != null && filterEntity.getCity().getId() != null
+	                && !filterEntity.getCity().getId().equals(defaultUUID)) {
+	            sb.append(" AND u.ciudadResidencia = ?");
+	            params.add(filterEntity.getCity().getId());
+	        }
+	        if (filterEntity.getEmail() != null && !filterEntity.getEmail().isBlank()) {
+	            sb.append(" AND u.correoElectronico = ?");
+	            params.add(filterEntity.getEmail());
+	        }
+	        if (filterEntity.getPhoneNumber() != null && !filterEntity.getPhoneNumber().isBlank()) {
+	            sb.append(" AND u.numeroTelefonoMovil = ?");
+	            params.add(filterEntity.getPhoneNumber());
+	        }
+	        if (filterEntity.isEmailConfirmed()) {
+	            sb.append(" AND u.correoElectronicoConfirmado = ?");
+	            params.add(true);
+	        }
+	        if (filterEntity.isPhoneConfirmed()) {
+	            sb.append(" AND u.numeroTelefonoMovilConfirmado = ?");
+	            params.add(true);
+	        }
+	    }
+
+	    final var results = new ArrayList<UserEntity>();
+
+	    try (var preparedStatement = getConnection().prepareStatement(sb.toString())) {
+
+	        for (int i = 0; i < params.size(); i++) {
+	            preparedStatement.setObject(i + 1, params.get(i));
+	        }
+
+	        try (var rs = preparedStatement.executeQuery()) {
+	            while (rs.next()) {
+	                results.add(mapResultSetToUserEntity(rs));
+	            }
+	        }
+
+	        return results;
+
+	    } catch (final SQLException exception) {
+	        var userMessage = "Se ha presentado un problema tratando de consultar usuarios por filtro";
+	        var technicalMessage = "Error ejecutando la consulta de usuarios por filtro: " + exception.getMessage();
+	        throw NoseException.create(exception, userMessage, technicalMessage);
+	    } catch (final Exception exception) {
+	        var userMessage = "Se ha presentado un problema INESPERADO tratando de consultar usuarios por filtro";
+	        var technicalMessage = "Error inesperado al procesar la consulta de usuarios por filtro: " + exception.getMessage();
+	        throw NoseException.create(exception, userMessage, technicalMessage);
+	    }
+	}
+
+	/**
+	 * Mapea la fila actual del ResultSet a UserEntity con sus objetos relacionados (IdentificationType, City, Department, Country).
+	 */
+	private UserEntity mapResultSetToUserEntity(final ResultSet resultSet) throws SQLException {
+	    final var user = new UserEntity();
+
+	    // identification type
+	    var idType = new IdentificationTypeEntity();
+	    idType.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idTipoIdentificacion")));
+	    idType.setName(resultSet.getString("nombreTipoIdentificacion"));
+
+	    // country
+	    var country = new CountryEntity();
+	    country.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idPaisDepartamentoCiudadResidencia")));
+	    country.setName(resultSet.getString("nombrePaisDepartamentoCiudadResidencia"));
+
+	    // department/state
+	    var state = new DepartmentEntity();
+	    state.setCountry(country);
+	    state.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idDepartamentoCiudadResidencia")));
+	    state.setName(resultSet.getString("nombreDepartamentoCiudadResidencia"));
+
+	    // city
+	    var city = new CityEntity();
+	    city.setDepartment(state);
+	    city.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idCiudadResidencia")));
+	    city.setName(resultSet.getString("nombreCiudadResidencia"));
+
+	    // user basic fields
+	    user.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
+	    user.setIdentificationType(idType);
+	    user.setIdNumber(resultSet.getString("numeroIdentificacion"));
+	    user.setFirstName(resultSet.getString("primerNombre"));
+	    user.setSecondName(resultSet.getString("segundoNombre"));
+	    user.setLastName(resultSet.getString("primerApellido"));
+	    user.setSecondLastName(resultSet.getString("segundoApellido"));
+	    user.setCity(city);
+	    user.setEmail(resultSet.getString("correoElectronico"));
+	    user.setPhoneNumber(resultSet.getString("numeroTelefonoMovil"));
+	    user.setPhoneConfirmed(resultSet.getBoolean("numeroTelefonoMovilConfirmado"));
+	    user.setEmailConfirmed(resultSet.getBoolean("correoElectronicoConfirmado"));
+
+	    return user;
+	}
 }
+

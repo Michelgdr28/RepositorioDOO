@@ -1,5 +1,10 @@
 package co.edu.uco.nose.data.dao.factory.sqlserver;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import co.edu.uco.nose.crosscuting.exception.NoseException;
+import co.edu.uco.nose.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.nose.data.dao.entity.CityDAO;
 import co.edu.uco.nose.data.dao.entity.CountryDAO;
 import co.edu.uco.nose.data.dao.entity.DepartmentDAO;
@@ -23,12 +28,16 @@ public final class SqlServerDAOFactory extends DAOFactory {
 		try {
 			this.connection = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=YourDatabase;user=YourUsername;password=YourPassword;");
 		}catch (final SQLException exception) {
-				var userMessage = "Error al abrir la conexión a la base de datos.";
-				var technicalMessage = "SQLException: " + exception.getMessage();
+				var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS
+		                .getContent();
+				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS
+		                .getContent();
 				throw NoseException.create(exception, userMessage, technicalMessage);
 			} catch (final Exception exception) {
-				var userMessage = "Error inesperado al abrir la conexión a la base de datos.";
-				var technicalMessage = "Exception: " + exception.getMessage();
+				var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS
+		                .getContent();
+				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS
+		                .getContent();
 				throw NoseException.create(exception, userMessage, technicalMessage);
 		}
 		
@@ -55,7 +64,7 @@ public final class SqlServerDAOFactory extends DAOFactory {
 	}
 
 	@Override
-	public UserDAO getuserUserDAO() {
+	public UserDAO getUserDAO() {
 		return new UserSqlServerDAO(connection);
 	}
 
