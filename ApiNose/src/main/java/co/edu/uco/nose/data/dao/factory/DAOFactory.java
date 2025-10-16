@@ -32,9 +32,9 @@ public abstract class DAOFactory {
 
 	public abstract CountryDAO getCountryDAO();
 
-	public abstract IdentificationTypeDAO getIdType();
+	public abstract IdentificationTypeDAO getIdentificationType();
 
-	public abstract DepartmentDAO getStateDAO();
+	public abstract DepartmentDAO getDepartmentDAO();
 
 	public abstract UserDAO getUserDAO();
 
@@ -98,4 +98,5 @@ public abstract class DAOFactory {
 			var technicalMessage = "";
 			throw NoseException.create(exception, userMessage, technicalMessage);
 	}
+}
 }

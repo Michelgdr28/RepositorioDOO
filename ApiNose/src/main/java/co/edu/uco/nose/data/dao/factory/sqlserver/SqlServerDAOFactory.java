@@ -54,12 +54,12 @@ public final class SqlServerDAOFactory extends DAOFactory {
 	}
 
 	@Override
-	public IdentificationTypeDAO getIdType() {
+	public IdentificationTypeDAO getIdentificationType() {
 		return new IdentificationTypeSqlServerDAO(connection);
 	}
 
 	@Override
-	public DepartmentDAO getStateDAO() {
+	public DepartmentDAO getDepartmentDAO() {
 		return new DepartmentSqlServerDAO(connection);
 	}
 
