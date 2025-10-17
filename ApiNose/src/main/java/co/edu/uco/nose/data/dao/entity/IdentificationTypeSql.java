@@ -34,9 +34,9 @@ public class IdentificationTypeSql {
 			 INNER JOIN Ciudad AS c ON u.ciudadResidencia = c.id
 			 INNER JOIN Departamento AS d ON c.departamento = d.id
 			 INNER JOIN Pais AS p ON d.pais = p.id
-			"";
+			""";
 	
-	public static final String FIND_BY_FILTER = ""
+	public static final String FIND_BY_FILTER = """
 				SELECT u.id,
 				ti.id AS idTipoIdentificacion,
 				ti.nombre AS nombreTipoIdentificacion,
@@ -71,9 +71,9 @@ public class IdentificationTypeSql {
 			  AND (? IS NULL OR u.numeroTelefonoMovil LIKE CONCAT('%', ?, '%'))
 			  AND (? IS NULL OR u.correoElectronicoConfirmado = ?)
 			  AND (? IS NULL OR u.numeroTelefonoMovilConfirmado = ?)
-			"";
+			""";
 	
-	public static final String FIND_BY_ID = ""
+	public static final String FIND_BY_ID = """
 			SELECT u.id,
 				ti.id AS idTipoIdentificacion,
 				ti.nombre AS nombreTipoIdentificacion,
@@ -114,9 +114,9 @@ public class IdentificationTypeSql {
 					correoElectronicoConfirmado = ?,
 					numeroTelefonoMovilConfirmado = ?,
 			WHERE id = ?
-				"";
+				""";
 	
-	public static String DELETE = ""
+	public static String DELETE = """
 			DELETE
 			FROM Usuario
 			WHERE id = ?

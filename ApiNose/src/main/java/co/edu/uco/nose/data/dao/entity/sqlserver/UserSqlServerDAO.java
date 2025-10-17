@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.crosscuting.helper.SqlConnectionHelper;
+import co.edu.uco.nose.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.nose.data.dao.entity.SqlConnection;
 import co.edu.uco.nose.data.dao.entity.UserDAO;
 import co.edu.uco.nose.data.dao.entity.UserSql;
@@ -45,12 +46,12 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 			preparedStatement.executeUpdate();
 			
 		} catch (final SQLException exception) {
-			var userMessage = "Se ha presentado un problema tratando de registrar la informacion del nuevo usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-			var technicalMessage = "Se ha presentado un problema al tratar de ejecutar el proceso de creacion de un usuario";
+			var userMessage = MessagesEnum.USER_ERROR_USER_CREATE.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_CREATE.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		} catch (final Exception exception) {
-			var userMessage = "Se ha presentado un problema INESPERADO tratando de crear un nuevo usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-			var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar el ";
+			var userMessage = MessagesEnum.USER_ERROR_USER_CREATE_UNEXPECTED.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_CREATE_UNEXPECTED.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		}
 	}
@@ -68,22 +69,22 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 					users.add(user);
 				} 
 			} catch (final SQLException exception) {
-				var userMessage = "Ocurrió un problema al ejecutar la consulta de usuarios";
-				var technicalMessage = "Error SQL ejecutando el query en UserDAO.findAll.";
+				var userMessage = MessagesEnum.USER_ERROR_USER_FIND_ALL.getContent();
+				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_ALL.getContent();
 				throw NoseException.create(exception, userMessage, technicalMessage);
 			} catch (final Exception exception) {
-				var userMessage = "Ocurrió un problema INESPERADO al ejecutar la consulta de usuarios";
-				var technicalMessage = "Error INESPERADO SQL ejecutando el query en UserDAO.findAll.";
+				var userMessage = MessagesEnum.USER_ERROR_USER_FIND_ALL_UNEXPECTED.getContent();
+				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_ALL_UNEXPECTED.getContent();
 				throw NoseException.create(exception, userMessage, technicalMessage);
 			}
 			
 		} catch (final SQLException exception) {
-			var userMessage = "Se ha presentado un problema tratando de consultar la informacion de los usuarios. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-			var technicalMessage = "Se ha presentado un problema al tratar de ejecutar el proceso de consulta de usuarios. Por favor verifique que la informacion este correcta";
+			var userMessage = MessagesEnum.USER_ERROR_USER_FIND_ALL.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_ALL.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		} catch (final Exception exception) {
-			var userMessage = "Se ha presentado un problema INESPERADO tratando de consultar la informacion de los usuarios. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-			var technicalMessage = "Se ha presentado un problema INESPERADO al tratar de ejecutar el proceso de consulta de usuarios. Por favor verifique que la informacion este correcta";
+			var userMessage = MessagesEnum.USER_ERROR_USER_FIND_ALL_UNEXPECTED.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_ALL_UNEXPECTED.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		}
 		return users;
@@ -120,22 +121,22 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 					users.add(user);
 				} 
 			} catch (final SQLException exception) {
-				var userMessage = "Ocurrió un problema al ejecutar la consulta de usuarios";
-				var technicalMessage = "Error SQL ejecutando el query en UserDAO.findByFilter.";
+				var userMessage =MessagesEnum.USER_ERROR_USER_FIND_BY_FILTER.getContent(); 
+				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_BY_FILTER.getContent();
 				throw NoseException.create(exception, userMessage, technicalMessage);
 			} catch (final Exception exception) {
-				var userMessage = "Ocurrió un problema INESPERADO al ejecutar la consulta de usuarios";
-				var technicalMessage = "Error INESPERADO SQL ejecutando el query en UserDAO.findByFilter.";
+				var userMessage = MessagesEnum.USER_ERROR_USER_FIND_BY_FILTER_UNEXPECTED.getContent();
+				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_BY_FILTER_UNEXPECTED.getContent();
 				throw NoseException.create(exception, userMessage, technicalMessage);
 			}
 			
 		} catch (final SQLException exception) {
-			var userMessage = "Se ha presentado un problema tratando de consultar la informacion de los usuarios. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-			var technicalMessage = "Se ha presentado un problema al tratar de ejecutar el proceso de consulta de usuarios. Por favor verifique que la informacion este correcta";
+			var userMessage = MessagesEnum.USER_ERROR_USER_FIND_BY_FILTER.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_BY_FILTER.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 			} catch (final Exception exception) {
-				var userMessage = "Se ha presentado un problema INESPERADO tratando de consultar la informacion de los usuarios. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-				var technicalMessage = "Se ha presentado un problema INESPERADO al tratar de ejecutar el proceso de consulta de usuarios. Por favor verifique que la informacion este correcta";
+				var userMessage = MessagesEnum.USER_ERROR_USER_FIND_BY_FILTER_UNEXPECTED.getContent();
+				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_BY_FILTER_UNEXPECTED.getContent();
 				throw NoseException.create(exception, userMessage, technicalMessage);
 				
 			}
@@ -160,28 +161,28 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 				
 			} catch (final SQLException exception) {
 				
-				var userMessage = "Ocurrió un problema al ejecutar la consulta de usuario";
-				var technicalMessage = "Error SQL ejecutando el query en UserDAO.findById.";
+				var userMessage = MessagesEnum.USER_ERROR_USER_FIND_BY_ID.getContent(); ;
+				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_BY_ID.getContent(); 
 				throw NoseException.create(exception, userMessage, technicalMessage);
 				
 			} catch (final Exception exception) {
 				
-				var userMessage = "Ocurrió un problema INESPERADO al ejecutar la consulta de usuario";
-				var technicalMessage = "Error INESPERADO SQL ejecutando el query en UserDAO.findById.";
+				var userMessage = MessagesEnum.USER_ERROR_USER_FIND_BY_ID_UNEXPECTED.getContent();
+				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_BY_ID_UNEXPECTED.getContent();
 				throw NoseException.create(exception, userMessage, technicalMessage);
 				
 			}
 			
 		} catch (final SQLException exception) {
 			
-			var userMessage = "Se ha presentado un problema tratando de consultar la informacion del usuario deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-			var technicalMessage = "Se ha presentado un problema al tratar de ejecutar el proceso de consulta del usuario deseado. Por favor verifique que la informacion este correcta";
+			var userMessage = MessagesEnum.USER_ERROR_USER_FIND_BY_ID.getContent(); ;
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_BY_ID.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 			
 		} catch (final Exception exception) {
 			
-			var userMessage = "Se ha presentado un problema INESPERADO tratando de consultar la informacion del usuario deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-			var technicalMessage = "Se ha presentado un problema INESPERADO al tratar de ejecutar el proceso de consulta del usuario deseado. Por favor verifique que la informacion este correcta";
+			var userMessage = MessagesEnum.USER_ERROR_USER_FIND_BY_ID_UNEXPECTED.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_BY_ID_UNEXPECTED.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 			
 		}
@@ -209,12 +210,12 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 			preparedStatement.executeUpdate();
 			
 		} catch (final SQLException exception) {
-			var userMessage = "Se ha presentado un problema tratando de modificar la informacion del nuevo usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-			var technicalMessage = "Se ha presentado un problema al tratar de ejecutar el proceso de modificacion de un usuario";
+			var userMessage = MessagesEnum.USER_ERROR_USER_UPDATE.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_UPDATE.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		} catch (final Exception exception) {
-			var userMessage = "Se ha presentado un problema INESPERADO tratando de modificar la informacion del usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-			var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar el proceso de modificacion de un usuario";
+			var userMessage = MessagesEnum.USER_ERROR_USER_UPDATE_UNEXPECTED.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_UPDATE_UNEXPECTED.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		}
 		
@@ -230,12 +231,12 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 			preparedStatement.executeUpdate();
 			
 		} catch (final SQLException exception) {
-			var userMessage = "Se ha presentado un problema tratando de eliminar la informacion del nuevo usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-			var technicalMessage = "Se ha presentado un problema al tratar de ejecutar el proceso de eliminacion del usuario";
+			var userMessage = MessagesEnum.USER_ERROR_USER_DELETE.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_DELETE.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		} catch (final Exception exception) {
-			var userMessage = "Se ha presentado un problema INESPERADO tratando de eliminar la informacion del usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
-			var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar el proceso de eliminacion del usuario";
+			var userMessage = MessagesEnum.USER_ERROR_USER_DELETE_UNEXPECTED.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_DELETE_UNEXPECTED.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		}		
 	}

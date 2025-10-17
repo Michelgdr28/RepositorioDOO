@@ -16,12 +16,18 @@ public final class NoseException extends RuntimeException{
 		setTechnicalMessage(technicalMessage);
 	}
 	
-	public static NoseException create (final String userMessage, String technicalMessage2) {
-		return new NoseException (new Exception(),userMessage,userMessage);
+	public static NoseException create(final String userMessage) {
+		return new NoseException(new Exception(), userMessage, userMessage);
 	}
-	public static NoseException create (Exception exception, final String userMessage,
+	
+	public static NoseException create(final String userMessage, 
 			final String technicalMessage) {
-		return new NoseException(new Exception(),userMessage,technicalMessage);
+		return new NoseException(new Exception(), userMessage, technicalMessage);
+	}
+	
+	public static NoseException create(final Throwable rootException, 
+			final String userMessage, final String technicalMessage) {
+		return new NoseException(rootException, userMessage, technicalMessage);
 	}
 	public Throwable getRootException() {
 		return rootException;

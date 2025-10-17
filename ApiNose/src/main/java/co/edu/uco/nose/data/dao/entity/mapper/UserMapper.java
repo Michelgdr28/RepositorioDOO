@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
+import co.edu.uco.nose.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.nose.entity.UserEntity;
 
 public final class UserMapper {
@@ -30,12 +31,12 @@ public final class UserMapper {
 			
 			
 		} catch (final SQLException exception) {
-			var userMessage = "";
-			var technicalMessage = "";
+			var userMessage = MessagesEnum.USER_ERROR_USER_MAPPER.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_MAPPER.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		} catch (final Exception exception) {
-			var userMessage = "";
-			var technicalMessage = "";
+			var userMessage = MessagesEnum.USER_ERROR_USER_MAPPER_UNEXPECTED.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_MAPPER_UNEXPECTED.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		}
 		return user;
