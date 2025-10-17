@@ -1,24 +1,19 @@
-package co.edu.uco.nose.data.dao.mapper;
+package co.edu.uco.nose.data.dao.entity.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
-import co.edu.uco.nose.entity.CityEntity;
 import co.edu.uco.nose.entity.CountryEntity;
-import co.edu.uco.nose.entity.DepartmentEntity;
 
-public final class CityMapper {
-	public static CityEntity map(ResultSet resultSet) {
-		var city = new CityEntity();
+public final class CountryMapper {
+	public static CountryEntity map(final ResultSet resultSet) {
+		var country = new CountryEntity();
 		try {
-			var state = DepartmentMapper.map(resultSet);
-			
-			city.setDepartment(state);
-			city.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idCiudadResidencia")));
-			city.setName(resultSet.getString("nombreCiudadResidencia"));
-			
+			country.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idPaisDepartamentoCiudadResidencia")));
+			country.setName(resultSet.getString("nombrePaisDepartamentoCiudadResidencia"));
+
 		} catch (final SQLException exception) {
 			var userMessage = "";
 			var technicalMessage = "";
@@ -28,7 +23,7 @@ public final class CityMapper {
 			var technicalMessage = "";
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		}
-		return city;
+		return country;
 		
 	}
 }

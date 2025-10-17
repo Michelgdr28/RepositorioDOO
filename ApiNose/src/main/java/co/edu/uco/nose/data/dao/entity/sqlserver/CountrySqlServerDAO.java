@@ -8,10 +8,10 @@ import java.util.UUID;
 
 import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.data.dao.entity.CountryDAO;
+import co.edu.uco.nose.data.dao.entity.CountrySql;
 import co.edu.uco.nose.data.dao.entity.SqlConnection;
-import co.edu.uco.nose.data.dao.mapper.CountryMapper;
+import co.edu.uco.nose.data.dao.entity.mapper.CountryMapper;
 import co.edu.uco.nose.entity.CountryEntity;
-import co.edu.uco.nose.data.dao.sql.CountrySql;
 
 public final class CountrySqlServerDAO extends SqlConnection implements CountryDAO {
 	

@@ -1,19 +1,21 @@
-package co.edu.uco.nose.data.dao.mapper;
+package co.edu.uco.nose.data.dao.entity.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
-import co.edu.uco.nose.entity.CountryEntity;
+import co.edu.uco.nose.entity.IdentificationTypeEntity;
 
-public final class CountryMapper {
-	public static CountryEntity map(final ResultSet resultSet) {
-		var country = new CountryEntity();
+public final class IdentificationTypeMapper {
+	public static IdentificationTypeEntity map(ResultSet resultSet) {
+		
+		var idType = new IdentificationTypeEntity();
+		
 		try {
-			country.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idPaisDepartamentoCiudadResidencia")));
-			country.setName(resultSet.getString("nombrePaisDepartamentoCiudadResidencia"));
-
+			idType.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idTipoIdentificacion")));
+			idType.setName(resultSet.getString("nombreTipoIdentificacion"));
+			
 		} catch (final SQLException exception) {
 			var userMessage = "";
 			var technicalMessage = "";
@@ -23,7 +25,7 @@ public final class CountryMapper {
 			var technicalMessage = "";
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		}
-		return country;
+		return idType;
 		
 	}
 }

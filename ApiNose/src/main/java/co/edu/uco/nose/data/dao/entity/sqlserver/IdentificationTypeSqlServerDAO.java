@@ -8,9 +8,9 @@ import java.util.UUID;
 
 import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.data.dao.entity.IdentificationTypeDAO;
+import co.edu.uco.nose.data.dao.entity.IdentificationTypeSql;
 import co.edu.uco.nose.data.dao.entity.SqlConnection;
-import co.edu.uco.nose.data.dao.mapper.IdentificationTypeMapper;
-import co.edu.uco.nose.data.dao.sql.IdentificationTypeSql;
+import co.edu.uco.nose.data.dao.entity.mapper.IdentificationTypeMapper;
 import co.edu.uco.nose.entity.IdentificationTypeEntity;
 
 public final class IdentificationTypeSqlServerDAO extends SqlConnection implements IdentificationTypeDAO {
@@ -63,7 +63,7 @@ public final class IdentificationTypeSqlServerDAO extends SqlConnection implemen
 
 	@Override
 	public IdentificationTypeEntity findById(final UUID id) {
-		var idType = new IdentificationTypeEntity();
+		var identificationType = new IdentificationTypeEntity();
 		
 		try (var preparedStatement = this.getConnection().prepareStatement(IdentificationTypeSql.FIND_BY_ID)) {
 			preparedStatement.setObject(1, id);
@@ -72,7 +72,7 @@ public final class IdentificationTypeSqlServerDAO extends SqlConnection implemen
 				
 				if (resultSet.next()) {
 					
-					idType = IdentificationTypeMapper.map(resultSet);
+					identificationType = IdentificationTypeMapper.map(resultSet);
 					
 				}
 				

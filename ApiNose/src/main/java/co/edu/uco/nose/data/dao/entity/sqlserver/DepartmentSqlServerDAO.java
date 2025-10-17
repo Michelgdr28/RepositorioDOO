@@ -8,9 +8,9 @@ import java.util.UUID;
 
 import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.data.dao.entity.SqlConnection;
+import co.edu.uco.nose.data.dao.entity.mapper.DepartmentMapper;
 import co.edu.uco.nose.data.dao.entity.DepartmentDAO;
-import co.edu.uco.nose.data.dao.mapper.DepartmentMapper;
-import co.edu.uco.nose.data.dao.sql.DepartmentSql;
+import co.edu.uco.nose.data.dao.entity.DepartmentSql;
 import co.edu.uco.nose.entity.DepartmentEntity;
 
 public final class DepartmentSqlServerDAO extends SqlConnection implements DepartmentDAO{

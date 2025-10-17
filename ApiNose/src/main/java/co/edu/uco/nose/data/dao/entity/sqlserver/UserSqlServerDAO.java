@@ -8,16 +8,12 @@ import java.util.UUID;
 
 import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.crosscuting.helper.SqlConnectionHelper;
-import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.data.dao.entity.SqlConnection;
 import co.edu.uco.nose.data.dao.entity.UserDAO;
-import co.edu.uco.nose.entity.CityEntity;
-import co.edu.uco.nose.entity.CountryEntity;
-import co.edu.uco.nose.entity.IdentificationTypeEntity;
-import co.edu.uco.nose.entity.DepartmentEntity;
+import co.edu.uco.nose.data.dao.entity.UserSql;
+import co.edu.uco.nose.data.dao.entity.mapper.UserMapper;
+
 import co.edu.uco.nose.entity.UserEntity;
-import co.edu.uco.nose.data.dao.mapper.UserMapper;
-import co.edu.uco.nose.data.dao.sql.UserSql;
 
 public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 
@@ -241,10 +237,6 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 			var userMessage = "Se ha presentado un problema INESPERADO tratando de eliminar la informacion del usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema";
 			var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar el proceso de eliminacion del usuario";
 			throw NoseException.create(exception, userMessage, technicalMessage);
-		}
-		
+		}		
 	}
-
-
-
 }

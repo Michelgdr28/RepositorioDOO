@@ -8,9 +8,9 @@ import java.util.UUID;
 
 import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.data.dao.entity.CityDAO;
+import co.edu.uco.nose.data.dao.entity.CitySql;
 import co.edu.uco.nose.data.dao.entity.SqlConnection;
-import co.edu.uco.nose.data.dao.mapper.CityMapper;
-import co.edu.uco.nose.data.dao.sql.CitySql;
+import co.edu.uco.nose.data.dao.entity.mapper.CityMapper;
 import co.edu.uco.nose.entity.CityEntity;
 
 public final class CitySqlServerDAO extends SqlConnection implements CityDAO {

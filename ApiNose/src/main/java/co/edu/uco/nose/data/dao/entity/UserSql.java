@@ -1,6 +1,6 @@
-package co.edu.uco.nose.data.dao.sql;
+package co.edu.uco.nose.data.dao.entity;
 
-public class CountrySql {
+public class UserSql {
 	public static final String CREATE = """
 			INSERT INTO Usuario (id, tipoIdentificacion,
 				numeroIdentificacion, primerNombre, segundoNombre,

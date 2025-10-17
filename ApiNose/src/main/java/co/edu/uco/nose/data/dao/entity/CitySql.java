@@ -1,4 +1,4 @@
-package co.edu.uco.nose.data.dao.sql;
+package co.edu.uco.nose.data.dao.entity;
 
 public class CitySql {
 	public static final String CREATE = """

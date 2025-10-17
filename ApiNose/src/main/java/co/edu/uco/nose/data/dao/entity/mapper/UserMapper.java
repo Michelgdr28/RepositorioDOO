@@ -1,14 +1,10 @@
-package co.edu.uco.nose.data.dao.mapper;
+package co.edu.uco.nose.data.dao.entity.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
-import co.edu.uco.nose.entity.CityEntity;
-import co.edu.uco.nose.entity.CountryEntity;
-import co.edu.uco.nose.entity.IdentificationTypeEntity;
-import co.edu.uco.nose.entity.DepartmentEntity;
 import co.edu.uco.nose.entity.UserEntity;
 
 public final class UserMapper {
