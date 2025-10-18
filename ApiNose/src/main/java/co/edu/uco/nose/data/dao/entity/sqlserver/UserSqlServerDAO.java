@@ -241,3 +241,4 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 		}		
 	}
 }
+//REFACTORIZAR USANDO CONDICIONES -- CREATEWHERECLAUSULA
