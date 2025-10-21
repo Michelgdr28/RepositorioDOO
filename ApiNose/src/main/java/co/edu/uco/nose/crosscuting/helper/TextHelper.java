@@ -21,4 +21,14 @@ public final class TextHelper {
 	public static boolean isEmpty (final String value) {
 		return EMPTY.equals(getDefault(value));
 	}
+
+	public static boolean isEmptyWithTrim(String email) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public static boolean isEmptyWithTrim(String secondName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

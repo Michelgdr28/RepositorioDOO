@@ -162,6 +162,7 @@ public final class UserEntity {
 	public void setPhoneConfirmed(boolean phoneConfirmed) {
 		this.phoneConfirmed = phoneConfirmed;
 	}
+
 	
 	
 }

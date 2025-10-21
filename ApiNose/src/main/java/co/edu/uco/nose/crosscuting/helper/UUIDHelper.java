@@ -28,4 +28,10 @@ public final class UUIDHelper {
 	public UUID generateNewUUID() {
 		return UUID.randomUUID();
 	}
+
+	public boolean isDefaultUUID(UUID id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
