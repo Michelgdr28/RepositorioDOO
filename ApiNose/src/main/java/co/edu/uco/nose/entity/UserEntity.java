@@ -163,6 +163,16 @@ public final class UserEntity {
 		this.phoneConfirmed = phoneConfirmed;
 	}
 
+	public boolean isEmailConfirmedIsDefaultValue() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isPhoneNumberConfirmedIsDefaultValue() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 	
 }

@@ -12,7 +12,7 @@
 	<artifactId>api-nose</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ApiNose</name>
-	<description>Api que tendra la capacidad de exponer servicios a los diferentes clientes atraves de mecanismo REST, donde se tendran expuestos los contratos que llevaran a cabo las diferentes operaciones dentro de la aplicacion Nose.</description>
+	<description>Api que trendra la capacidad de exponer servicios a los diferentes cliente a traves de mecanismo REST, donde se tendra expuestos los contratos que llevaran a cabo las diferentes operaciones dentro de la aplicacion Nose</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -34,16 +34,25 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-<dependency>
-	        <groupId>com.microsoft.sqlserver</groupId>
-	        <artifactId>mssql-jdbc</artifactId>
-	        <version>12.4.0.jre11</version><!--$NO-MVN-MAN-VER$--> <!-- Replace with your desired version and JRE compatibility -->
-	    </dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+	    <dependency>
+	        <groupId>com.microsoft.sqlserver</groupId>
+	        <artifactId>mssql-jdbc</artifactId>
+	        <version>12.4.0.jre11</version> <!-- Replace with your desired version and JRE compatibility -->
+	    </dependency>
+			
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-jdbc</artifactId>
+		    <version>3.3.5</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

@@ -191,7 +191,7 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
         addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getEmail()), "u.correoElectronico = ?", filterEntityValidated.getEmail());
         addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getPhoneNumber()), "u.numeroTelefonoMovil = ?", filterEntityValidated.getPhoneNumber());
         addCondition(conditions, parametersList, !filterEntityValidated.isEmailConfirmedIsDefaultValue(), "u.correoElectronicoConfirmado = ?", filterEntityValidated.isEmailConfirmed());
-        addCondition(conditions, parametersList, !filterEntityValidated.isPhoneNumberConfrimedIsDefaultValue(), "u.numeroTelefonoMovilConfirmado = ?", filterEntityValidated.isPhoneConfirmed());
+        addCondition(conditions, parametersList, !filterEntityValidated.isPhoneNumberConfirmedIsDefaultValue(), "u.numeroTelefonoMovilConfirmado = ?", filterEntityValidated.isPhoneConfirmed());
 
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ");
