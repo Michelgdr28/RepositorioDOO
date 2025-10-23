@@ -62,8 +62,8 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
     public void update(final UserEntity entity) {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
         final var sql = new StringBuilder();
-        sql.append("UPDATE Usuario SET ");
-        sql.append("tipoIdentificacion = ?, ");
+        sql.append("UPDATE Usuario ");
+        sql.append("SET tipoIdentificacion = ?, ");
         sql.append("numeroIdentificacion = ?, ");
         sql.append("primerNombre = ?, ");
         sql.append("segundoNombre = ?, ");
@@ -104,7 +104,8 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
     public void delete(final UUID id) {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
         final var sql = new StringBuilder();
-        sql.append("DELETE FROM Usuario WHERE id = ?");
+        sql.append("DELETE FROM Usuario"); 
+        sql.append("WHERE id = ?");
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, id);
             preparedStatement.executeUpdate();

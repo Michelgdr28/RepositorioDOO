@@ -1,17 +1,22 @@
 package co.edu.uco.nose.data.dao.entity.sqlserver;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import co.edu.uco.nose.crosscuting.exception.NoseException;
+import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
+import co.edu.uco.nose.crosscuting.helper.SqlConnectionHelper;
+import co.edu.uco.nose.crosscuting.helper.TextHelper;
+import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.nose.data.dao.entity.CityDAO;
 import co.edu.uco.nose.data.dao.entity.SqlConnection;
 import co.edu.uco.nose.entity.CityEntity;
+import co.edu.uco.nose.entity.CountryEntity;
 import co.edu.uco.nose.entity.DepartmentEntity;
 
 public final class CitySqlServerDAO extends SqlConnection implements CityDAO {
@@ -21,34 +26,17 @@ public final class CitySqlServerDAO extends SqlConnection implements CityDAO {
     }
 
     @Override
+    public CityEntity findById(final UUID id) {
+        return findByfilter(new CityEntity(id)).stream().findFirst().orElse(new CityEntity());
+    }
+
+    @Override
     public List<CityEntity> findAll() {
-        var cities = new ArrayList<CityEntity>();
-
-        try (var preparedStatement = this.getConnection()
-                .prepareStatement("SELECT id, name, id_departament FROM City")) {
-
-            try (var resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    var city = mapCity(resultSet);
-                    cities.add(city);
-                }
-            }
-        } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.USER_ERROR_CITY_FIND_ALL.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_CITY_FIND_ALL.getContent();
-            throw NoseException.create(exception, userMessage, technicalMessage);
-        } catch (final Exception exception) {
-            var userMessage = MessagesEnum.USER_ERROR_CITY_FIND_ALL_UNEXPECTED.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_CITY_FIND_ALL_UNEXPECTED.getContent();
-            throw NoseException.create(exception, userMessage, technicalMessage);
-        }
-
-        return cities;
+        return findByfilter(new CityEntity());
     }
 
     @Override
     public List<CityEntity> findByfilter(final CityEntity filterEntity) {
-        var cities = new ArrayList<CityEntity>();
         var parametersList = new ArrayList<Object>();
         var sql = createSentenceFindByFilter(filterEntity, parametersList);
 
@@ -56,13 +44,7 @@ public final class CitySqlServerDAO extends SqlConnection implements CityDAO {
             for (int index = 0; index < parametersList.size(); index++) {
                 preparedStatement.setObject(index + 1, parametersList.get(index));
             }
-
-            try (var resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    var city = mapCity(resultSet);
-                    cities.add(city);
-                }
-            }
+            return executeSentenceFindByFilter(preparedStatement);
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.USER_ERROR_CITY_FIND_BY_FILTER.getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_CITY_FIND_BY_FILTER.getContent();
@@ -72,31 +54,46 @@ public final class CitySqlServerDAO extends SqlConnection implements CityDAO {
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_CITY_FIND_BY_FILTER_UNEXPECTED.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         }
-
-        return cities;
     }
 
     private String createSentenceFindByFilter(final CityEntity filterEntity, final List<Object> parametersList) {
         final var sql = new StringBuilder();
-        sql.append("SELECT id, name, id_departament FROM City");
+        sql.append("SELECT c.id AS idCiudad, ");
+        sql.append("c.nombre AS nombreCiudad, ");
+        sql.append("d.id AS idDepartamento, ");
+        sql.append("d.nombre AS nombreDepartamento, ");
+        sql.append("p.id AS idPais, ");
+        sql.append("p.nombre AS nombrePais ");
+        sql.append("FROM Ciudad AS c ");
+        sql.append("INNER JOIN Departamento AS d ON c.departamento = d.id ");
+        sql.append("INNER JOIN Pais AS p ON d.pais = p.id ");
 
+        createWhereClauseFindByFilter(sql, parametersList, filterEntity);
+        return sql.toString();
+    }
+
+    private void createWhereClauseFindByFilter(final StringBuilder sql, final List<Object> parametersList, final CityEntity filterEntity) {
+        var filterEntityValidated = ObjectHelper.getDefault(filterEntity, new CityEntity());
         final var conditions = new ArrayList<String>();
 
-        addCondition(conditions, parametersList, filterEntity.getId() != null, "id = ?", filterEntity.getId());
         addCondition(conditions, parametersList,
-                filterEntity.getName() != null && !filterEntity.getName().isBlank(),
-                "name = ?", filterEntity.getName());
+                !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getId()),
+                "c.id = ?", filterEntityValidated.getId());
 
-        if (filterEntity.getDepartment() != null && filterEntity.getDepartment().getId() != null) {
-            addCondition(conditions, parametersList, true, "id_departament = ?", filterEntity.getDepartment().getId());
+        addCondition(conditions, parametersList,
+                !TextHelper.isEmptyWithTrim(filterEntityValidated.getName()),
+                "c.nombre = ?", filterEntityValidated.getName());
+
+        if (filterEntityValidated.getDepartment() != null) {
+            addCondition(conditions, parametersList,
+                    !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getDepartment().getId()),
+                    "c.department = ?", filterEntityValidated.getDepartment().getId());
         }
 
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ");
             sql.append(String.join(" AND ", conditions));
         }
-
-        return sql.toString();
     }
 
     private void addCondition(final List<String> conditions, final List<Object> parametersList,
@@ -107,43 +104,37 @@ public final class CitySqlServerDAO extends SqlConnection implements CityDAO {
         }
     }
 
-    private CityEntity mapCity(final ResultSet resultSet) throws SQLException {
-        var entity = new CityEntity();
-        entity.setId(resultSet.getObject("id", UUID.class));
-        entity.setName(resultSet.getString("name"));
+    private List<CityEntity> executeSentenceFindByFilter(final PreparedStatement preparedStatement) {
+        var listCities = new ArrayList<CityEntity>();
+        try (var resultset = preparedStatement.executeQuery()) {
+            while (resultset.next()) {
+                var country = new CountryEntity();
+                country.setId(UUIDHelper.getUUIDHelper().getFromString(resultset.getString("idPais")));
+                country.setName(resultset.getString("nombrePais"));
 
-        var department = new DepartmentEntity();
-        department.setId(resultSet.getObject("id_departament", UUID.class));
-        entity.setDepartment(department);
+                var department = new DepartmentEntity();
+                department.setId(UUIDHelper.getUUIDHelper().getFromString(resultset.getString("idDepartamento")));
+                department.setName(resultset.getString("nombreDepartamento"));
+                department.setCountry(country);
 
-        return entity;
-    }
+                var city = new CityEntity();
+                city.setId(UUIDHelper.getUUIDHelper().getFromString(resultset.getString("idCiudad")));
+                city.setName(resultset.getString("nombreCiudad"));
+                city.setDepartment(department);
 
-    @Override
-    public CityEntity findById(final UUID id) {
-        var city = new CityEntity();
-
-        try (var preparedStatement = this.getConnection()
-                .prepareStatement("SELECT id, name, id_departament FROM City WHERE id = ?")) {
-
-            preparedStatement.setObject(1, id);
-
-            try (var resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    city = mapCity(resultSet);
-                }
+                listCities.add(city);
             }
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.USER_ERROR_CITY_FIND_BY_ID.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_CITY_FIND_BY_ID.getContent();
+            var userMessage = MessagesEnum.USER_ERROR_CITY_FIND_BY_FILTER.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_CITY_FIND_BY_FILTER.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.USER_ERROR_CITY_FIND_BY_ID_UNEXPECTED.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_CITY_FIND_BY_ID_UNEXPECTED.getContent();
+            var userMessage = MessagesEnum.USER_ERROR_CITY_FIND_BY_FILTER_UNEXPECTED.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_CITY_FIND_BY_FILTER_UNEXPECTED.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         }
-
-        return city;
+        return listCities;
     }
 }
+
 
