@@ -123,7 +123,7 @@ public final class UserEntity {
 		this.email = TextHelper.getDefaultWithTrim(email);
 	}
 
-	public String getPhoneNumber() {
+	public String getMobilePhone() {
 		return mobilePhone;
 	}
 
@@ -172,6 +172,7 @@ public final class UserEntity {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 
 	
 	

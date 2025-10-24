@@ -285,6 +285,18 @@ public enum MessagesEnum {
 			   "Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema."),
 	TECHNICAL_ERROR_USER_MAPPER_UNEXPECTED("Se ha presentado un problema inesperado al tratar de ejecutar el proceso de mapeo de datos del usuario. ",
 			   "Por favor verifique que la información proveniente de la base de datos sea correcta."),
+	USER_ERROR_USER_NOT_FOUND("",""),
+	TECHNICAL_ERROR_USER_NOT_FOUND("",""),
+	USER_ERROR_CONFIRM_MOBILE("",""),
+	TECHNICAL_ERROR_CONFIRM_MOBILE("",""),
+	USER_ERROR_CONFIRM_EMAIL("",""), 
+	TECHNICAL_ERROR_CONFIRM_EMAIL("",""), 
+	USER_ERROR_SEND_MOBILE_CONFIRMATION("",""), 
+	TECHNICAL_ERROR_SEND_MOBILE_CONFIRMATION("",""), 
+	USER_ERROR_SEND_EMAIL_CONFIRMATION("",""), 
+	TECHNICAL_ERROR_SEND_EMAIL_CONFIRMATION("",""),
+	
+	
 
 	;
 
