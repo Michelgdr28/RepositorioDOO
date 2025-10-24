@@ -13,7 +13,7 @@ public final class UserDomain extends Domain {
     private String secondName;
     private String firstLastName;
     private String secondLastName;
-    private CityDomain residenceCity;
+    private CityDomain city;
     private String email;
     private String mobilePhone;
     private boolean emailConfirmed;
@@ -27,7 +27,7 @@ public final class UserDomain extends Domain {
         setSecondName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
-        setResidenceCity(new CityDomain());
+        setCity(new CityDomain());
         setEmail(TextHelper.getDefault());
         setMobilePhone(TextHelper.getDefault());
         setEmailConfirmed(false);
@@ -42,7 +42,7 @@ public final class UserDomain extends Domain {
         setSecondName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
-        setResidenceCity(new CityDomain());
+        setCity(new CityDomain());
         setEmail(TextHelper.getDefault());
         setMobilePhone(TextHelper.getDefault());
         setEmailConfirmed(false);
@@ -68,7 +68,7 @@ public final class UserDomain extends Domain {
         setSecondName(secondName);
         setFirstLastName(firstLastName);
         setSecondLastName(secondLastName);
-        setResidenceCity(residenceCity);
+        setCity(city);
         setEmail(email);
         setMobilePhone(mobilePhone);
         setEmailConfirmed(emailConfirmed);
@@ -123,12 +123,12 @@ public final class UserDomain extends Domain {
         this.secondLastName = TextHelper.getDefaultWithTrim(secondLastName);
     }
 
-    public CityDomain getResidenceCity() {
-        return residenceCity;
+    public CityDomain getCity() {
+        return city;
     }
 
-    public void setResidenceCity(final CityDomain residenceCity) {
-        this.residenceCity = (residenceCity == null) ? new CityDomain() : residenceCity;
+    public void setCity(final CityDomain city) {
+        this.city = (city == null) ? new CityDomain() : city;
     }
 
     public String getEmail() {

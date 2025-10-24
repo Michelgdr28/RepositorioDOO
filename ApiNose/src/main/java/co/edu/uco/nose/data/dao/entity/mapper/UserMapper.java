@@ -21,12 +21,12 @@ public final class UserMapper {
 			user.setIdentificationType(idType);
 			user.setFirstName(resultSet.getString("primerNombre"));
 			user.setSecondName(resultSet.getString("segundoNombre"));
-			user.setLastName(resultSet.getString("primerApellido"));
+			user.setFirstLastName(resultSet.getString("primerApellido"));
 			user.setSecondLastName(resultSet.getString("segundoApellido"));
 			user.setCity(city);
 			user.setEmail(resultSet.getString("correoElectronico"));
-			user.setPhoneNumber(resultSet.getString("numeroTelefonoMovil"));
-			user.setPhoneConfirmed(resultSet.getBoolean("numeroTelefonoMovilConfirmado"));
+			user.setMobilePhone(resultSet.getString("numeroTelefonoMovil"));
+			user.setMobilePhoneConfirmed(resultSet.getBoolean("numeroTelefonoMovilConfirmado"));
 			user.setEmailConfirmed(resultSet.getBoolean("correoElectronicoConfirmado"));
 			
 			

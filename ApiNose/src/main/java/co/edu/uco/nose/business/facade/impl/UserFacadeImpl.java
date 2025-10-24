@@ -12,6 +12,12 @@ import co.edu.uco.nose.dto.UserDTO;
 
 public class UserFacadeImpl implements UserFacade {
 	
+private DAOFactory daoFactory;
+	
+	public UserFacadeImpl() {
+		this.daoFactory = daoFactory.getFactory();
+	}
+	
 
 	@Override
 	public void registerNewUserInformation(final UserDTO userDTO) {

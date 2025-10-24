@@ -30,8 +30,8 @@ public final class UserDTOAssembler implements DTOAssembler<UserDTO, UserDomain>
 		var cityDtoTmp = getCityDTOAssembler().toDTO(domain.getCity());
 		
 		var domainTmp = ObjectHelper.getDefault(domain, new UserDomain(UUIDHelper.getUUIDHelper().getDefault()));
-		return new UserDTO(domainTmp.getId(), domainTmp.getIdentificationNumber(), domainTmp.getFirstName(), domainTmp.getSecondName(), domainTmp.getFirstLastName(), domainTmp.getSecondLastName(),
-				domainTmp.getEmail(), domainTmp.getMobilePhone(), identificationTypeDtoTmp, cityDtoTmp);
+		return new UserDTO(domainTmp.getId(), domainTmp.getIdNumber(), domainTmp.getFirstName(), domainTmp.getSecondName(), domainTmp.getLastName(), domainTmp.getSecondLastName(),
+				domainTmp.getEmail(), domainTmp.getPhoneNumber(), identificationTypeDtoTmp, cityDtoTmp);
 	}
 
 	@Override

@@ -9,62 +9,62 @@ import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 public final class UserEntity {
 	
 	private UUID id;
-	private String idNumber;
+	private String identificationNumber;
 	private String firstName;
 	private String secondName;
-	private String lastName;
+	private String firstLastName;
 	private String secondLastName;
 	private String email;
-	private String phoneNumber;
+	private String mobilePhone;
 	private IdentificationTypeEntity identificationType;
 	private CityEntity city;
 	private boolean emailConfirmed;
-	private boolean phoneConfirmed;
+	private boolean mobilePhoneConfirmed;
 	
 	public UserEntity() {
 		setId(UUIDHelper.getUUIDHelper().getDefault());
-		setIdNumber(TextHelper.getDefault());
+		setIdentificationNumber(TextHelper.getDefault());
 		setFirstName(TextHelper.getDefault());
 		setSecondName(TextHelper.getDefault());
-		setLastName(TextHelper.getDefault());
+		setFirstLastName(TextHelper.getDefault());
 		setSecondLastName(TextHelper.getDefault());
 		setEmail(TextHelper.getDefault());
-		setPhoneNumber(TextHelper.getDefault());
+		setMobilePhone(TextHelper.getDefault());
 		setIdentificationType(new IdentificationTypeEntity());
 		setCity(new CityEntity());
 		setEmailConfirmed(false);
-		setPhoneConfirmed(false);
+		setMobilePhoneConfirmed(false);
 	}
 	
 	public UserEntity(UUID id) {
 		setId(id);
-		setIdNumber(TextHelper.getDefault());
+		setIdentificationNumber(TextHelper.getDefault());
 		setFirstName(TextHelper.getDefault());
 		setSecondName(TextHelper.getDefault());
-		setLastName(TextHelper.getDefault());
+		setFirstLastName(TextHelper.getDefault());
 		setSecondLastName(TextHelper.getDefault());
 		setEmail(TextHelper.getDefault());
-		setPhoneNumber(TextHelper.getDefault());
+		setMobilePhone(TextHelper.getDefault());
 		setIdentificationType(new IdentificationTypeEntity());
 		setCity(new CityEntity());
 		setEmailConfirmed(false);
-		setPhoneConfirmed(false);
+		setMobilePhoneConfirmed(false);
 	}
 	
-	public UserEntity(UUID id, String idNumber, String firstName, String secondName, String lastName, String secondLastName, String email, String phoneNumber,
+	public UserEntity(UUID id, String identificationNumber, String firstName, String secondName, String firstLastName, String secondLastName, String email, String phoneNumber,
 			IdentificationTypeEntity identificationType, CityEntity city) {
 		setId(id);
-		setIdNumber(idNumber);
+		setIdentificationNumber(identificationNumber);
 		setFirstName(firstName);
 		setSecondName(secondName);
-		setLastName(lastName);
+		setFirstLastName(firstLastName);
 		setSecondLastName(secondLastName);
 		setEmail(email);
-		setPhoneNumber(phoneNumber);
+		setMobilePhone(mobilePhone);
 		setIdentificationType(identificationType);
 		setCity(city);
 		setEmailConfirmed(false);
-		setPhoneConfirmed(false);
+		setMobilePhoneConfirmed(false);
 	}
 	
 	public UUID getId() {
@@ -75,12 +75,12 @@ public final class UserEntity {
 		this.id = UUIDHelper.getUUIDHelper().getDefault(id);
 	}
 
-	public String getIdNumber() {
-		return idNumber;
+	public String getIdentificationNumber() {
+		return identificationNumber;
 	}
 
-	public void setIdNumber(String idNumber) {
-		this.idNumber = TextHelper.getDefaultWithTrim(idNumber);
+	public void setIdentificationNumber(String idNumber) {
+		this.identificationNumber = TextHelper.getDefaultWithTrim(idNumber);
 	}
 
 	public String getFirstName() {
@@ -99,12 +99,12 @@ public final class UserEntity {
 		this.secondName = TextHelper.getDefaultWithTrim(secondName);
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getFirstLastName() {
+		return firstLastName;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = TextHelper.getDefaultWithTrim(lastName);
+	public void setFirstLastName(String firstLastName) {
+		this.firstLastName = TextHelper.getDefaultWithTrim(firstLastName);
 	}
 
 	public String getSecondLastName() {
@@ -124,11 +124,11 @@ public final class UserEntity {
 	}
 
 	public String getPhoneNumber() {
-		return phoneNumber;
+		return mobilePhone;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = TextHelper.getDefaultWithTrim(phoneNumber);
+	public void setMobilePhone(String phoneNumber) {
+		this.mobilePhone = TextHelper.getDefaultWithTrim(phoneNumber);
 	}
 
 	public IdentificationTypeEntity getIdentificationType() {
@@ -155,12 +155,12 @@ public final class UserEntity {
 		this.emailConfirmed = emailConfirmed;
 	}
 
-	public boolean isPhoneConfirmed() {
-		return phoneConfirmed;
+	public boolean isMobilePhoneConfirmed() {
+		return mobilePhoneConfirmed;
 	}
 
-	public void setPhoneConfirmed(boolean phoneConfirmed) {
-		this.phoneConfirmed = phoneConfirmed;
+	public void setMobilePhoneConfirmed(boolean mobilePhoneConfirmed) {
+		this.mobilePhoneConfirmed = mobilePhoneConfirmed;
 	}
 
 	public boolean isEmailConfirmedIsDefaultValue() {
@@ -168,7 +168,7 @@ public final class UserEntity {
 		return false;
 	}
 
-	public boolean isPhoneNumberConfirmedIsDefaultValue() {
+	public boolean isMobilePhoneConfirmedIsDefaultValue() {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -43,7 +43,7 @@ public class CityDTO {
 		this.name = TextHelper.getDefaultWithTrim(name);
 	}
 	
-	public DepartmentDTO getState() {
+	public DepartmentDTO getdepartment() {
 		return department;
 	}
 	

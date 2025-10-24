@@ -32,17 +32,17 @@ public class TestUserRegistration {
 			city.setDepartment(department);
 			
 			var user = new UserDTO();
-			user.setIdNumber("1000442701");
+			user.setIdentificationNumber("1000442701");
 			user.setFirstName("Matias");
 			user.setSecondName("Alejandro");
-			user.setLastName("Mora");
+			user.setFirstLastName("Mora");
 			user.setSecondLastName("De los Rios");
 			user.setEmail("mati.2509");
-			user.setPhoneNumber("3226271355");
+			user.setMobilePhone("3226271355");
 			user.setIdentificationType(identificationType);
 			user.setCity(city);
 			user.setEmailConfirmed(false);
-			user.setPhoneConfirmed(false);
+			user.setMobilePhoneConfirmed(false);
 						
 			// Colocar parametros, menos el id
 			

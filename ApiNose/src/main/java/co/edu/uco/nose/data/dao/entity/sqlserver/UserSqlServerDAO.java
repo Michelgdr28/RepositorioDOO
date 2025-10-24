@@ -36,16 +36,16 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, entity.getId());
             preparedStatement.setObject(2, entity.getIdentificationType().getId());
-            preparedStatement.setString(3, entity.getIdNumber());
+            preparedStatement.setString(3, entity.getIdentificationNumber());
             preparedStatement.setString(4, entity.getFirstName());
             preparedStatement.setString(5, entity.getSecondName());
-            preparedStatement.setString(6, entity.getLastName());
+            preparedStatement.setString(6, entity.getFirstLastName());
             preparedStatement.setString(7, entity.getSecondLastName());
             preparedStatement.setObject(8, entity.getCity().getId());
             preparedStatement.setString(9, entity.getEmail());
             preparedStatement.setString(10, entity.getPhoneNumber());
             preparedStatement.setBoolean(11, entity.isEmailConfirmed());
-            preparedStatement.setBoolean(12, entity.isPhoneConfirmed());
+            preparedStatement.setBoolean(12, entity.isMobilePhoneConfirmed());
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.USER_ERROR_USER_CREATE.getContent();
@@ -77,16 +77,16 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
         sql.append("WHERE id = ?");
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, entity.getIdentificationType().getId());
-            preparedStatement.setString(2, entity.getIdNumber());
+            preparedStatement.setString(2, entity.getIdentificationNumber());
             preparedStatement.setString(3, entity.getFirstName());
             preparedStatement.setString(4, entity.getSecondName());
-            preparedStatement.setString(5, entity.getLastName());
+            preparedStatement.setString(5, entity.getFirstLastName());
             preparedStatement.setString(6, entity.getSecondLastName());
             preparedStatement.setObject(7, entity.getCity().getId());
             preparedStatement.setString(8, entity.getEmail());
             preparedStatement.setString(9, entity.getPhoneNumber());
             preparedStatement.setBoolean(10, entity.isEmailConfirmed());
-            preparedStatement.setBoolean(11, entity.isPhoneConfirmed());
+            preparedStatement.setBoolean(11, entity.isMobilePhoneConfirmed());
             preparedStatement.setObject(12, entity.getId());
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
@@ -185,14 +185,14 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
 
         addCondition(conditions, parametersList, !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getId()), "u.id = ?", filterEntityValidated.getId());
         addCondition(conditions, parametersList, !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getIdentificationType().getId()), "u.tipoIdentificacion = ?", filterEntityValidated.getIdentificationType().getId());
-        addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getIdNumber()), "u.numeroIdentificacion = ?", filterEntityValidated.getIdNumber());
+        addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getIdentificationNumber()), "u.numeroIdentificacion = ?", filterEntityValidated.getIdentificationNumber());
         addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getFirstName()), "u.primerNombre = ?", filterEntityValidated.getFirstName());
         addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getSecondName()), "u.segundoNombre = ?", filterEntityValidated.getSecondName());
         addCondition(conditions, parametersList, !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getCity().getId()), "u.ciudadResidencia = ?", filterEntityValidated.getCity().getId());
         addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getEmail()), "u.correoElectronico = ?", filterEntityValidated.getEmail());
         addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getPhoneNumber()), "u.numeroTelefonoMovil = ?", filterEntityValidated.getPhoneNumber());
         addCondition(conditions, parametersList, !filterEntityValidated.isEmailConfirmedIsDefaultValue(), "u.correoElectronicoConfirmado = ?", filterEntityValidated.isEmailConfirmed());
-        addCondition(conditions, parametersList, !filterEntityValidated.isPhoneNumberConfirmedIsDefaultValue(), "u.numeroTelefonoMovilConfirmado = ?", filterEntityValidated.isPhoneConfirmed());
+        addCondition(conditions, parametersList, !filterEntityValidated.isMobilePhoneConfirmedIsDefaultValue(), "u.numeroTelefonoMovilConfirmado = ?", filterEntityValidated.isMobilePhoneConfirmed());
 
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ");
@@ -234,13 +234,13 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
                 user.setIdentificationType(identificationType);
                 user.setFirstName(resultset.getString("primerNombre"));
                 user.setSecondName(resultset.getString("segundoNombre"));
-                user.setLastName(resultset.getString("primerApellido"));
+                user.setFirstLastName(resultset.getString("primerApellido"));
                 user.setSecondLastName(resultset.getString("segundoApellido"));
                 user.setCity(city);
                 user.setEmail(resultset.getString("correoElectronico"));
-                user.setPhoneNumber(resultset.getString("numeroTelefonoMovil"));
+                user.setMobilePhone(resultset.getString("numeroTelefonoMovil"));
                 user.setEmailConfirmed(resultset.getBoolean("correoElectronicoConfirmado"));
-                user.setPhoneConfirmed(resultset.getBoolean("numeroTelefonoMovilConfirmado"));
+                user.setMobilePhoneConfirmed(resultset.getBoolean("numeroTelefonoMovilConfirmado"));
 
                 listUser.add(user);
             }
