@@ -56,7 +56,7 @@ public final class UserDomain extends Domain {
                       final String secondName,
                       final String firstLastName,
                       final String secondLastName,
-                      final CityDomain residenceCity,
+                      final CityDomain city,
                       final String email,
                       final String mobilePhone,
                       final boolean emailConfirmed,

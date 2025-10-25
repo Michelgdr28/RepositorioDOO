@@ -1,5 +1,6 @@
 package co.edu.uco.nose.business.business.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -82,9 +83,7 @@ public class UserBusinessImpl implements UserBusiness {
 
 	@Override
 	public List<UserDomain> findAllUsers() {
-		try {
-			List<UserEntity> userEntities = daoFactory.getUserDAO().findAll();
-			return UserEntityAssembler.getUserEntityAssembler().toDomainList(userEntities);
+			return findUsersByFilter(new UserDomain());
 		} catch (final Exception exception) {
 			var userMessage = MessagesEnum.USER_ERROR_USER_FIND_ALL.getContent();
 			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_ALL.getContent();
@@ -95,9 +94,9 @@ public class UserBusinessImpl implements UserBusiness {
 	@Override
 	public List<UserDomain> findUsersByFilter(UserDomain userFilters) {
 		try {
-			var entityFilter = UserEntityAssembler.getUserEntityAssembler().toEntity(userFilters);
-			var userEntities = daoFactory.getUserDAO().findByfilter(entityFilter);
-			return UserEntityAssembler.getUserEntityAssembler().toDomainList(userEntities);
+			var userEntityFilter = daoFactory.getUserDAO().findByfilter(UserEntityAssembler.getUserEntityAssembler().toEntity(userFilters));
+			var userDomainList = new ArrayList<UserDomain>();
+			return userDomainList;
 		} catch (final Exception exception) {
 			var userMessage = MessagesEnum.USER_ERROR_USER_FIND_BY_FILTER.getContent();
 			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_BY_FILTER.getContent();

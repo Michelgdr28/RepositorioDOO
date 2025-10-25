@@ -19,7 +19,7 @@ public final class DepartmentEntityAssembler implements EntityAssembler<Departme
 		
 	}
 	
-	public static EntityAssembler<DepartmentEntity, DepartmentDomain> getStateEntityAssembler() {
+	public static EntityAssembler<DepartmentEntity, DepartmentDomain> getDepartmentEntityAssembler() {
 		return INSTANCE;
 	}
 
@@ -36,7 +36,7 @@ public final class DepartmentEntityAssembler implements EntityAssembler<Departme
 		var countryDomainTmp = getCountryEntityAssembler().toDomain(entity.getCountry());
 		var entityTmp = ObjectHelper.getDefault(entity, new DepartmentEntity(UUIDHelper.getUUIDHelper().getDefault()));
 		
-		return new DepartmentDomain(entityTmp.getId(), entityTmp.getName(), countryDomainTmp);
+		return new DepartmentDomain(entityTmp.getId(), countryDomainTmp,entityTmp.getName());
 	}
 
 	@Override

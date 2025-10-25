@@ -52,7 +52,7 @@ public final class UserEntity {
 	}
 	
 	public UserEntity(UUID id, String identificationNumber, String firstName, String secondName, String firstLastName, String secondLastName, String email, String phoneNumber,
-			IdentificationTypeEntity identificationType, CityEntity city) {
+			IdentificationTypeEntity identificationType, CityEntity city, boolean emailConfirmed, boolean mobilePhoneConfirmed) {
 		setId(id);
 		setIdentificationNumber(identificationNumber);
 		setFirstName(firstName);

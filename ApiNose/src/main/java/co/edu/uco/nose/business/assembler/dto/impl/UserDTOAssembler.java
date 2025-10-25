@@ -1,7 +1,7 @@
 package co.edu.uco.nose.business.assembler.dto.impl;
 
 import static co.edu.uco.nose.business.assembler.dto.impl.CityDTOAssembler.getCityDTOAssembler;
-import static co.edu.uco.nose.business.assembler.dto.impl.IdentificationTypeDTOAssembler.getIdentificationTypeDTOAssembler;
+import static co.edu.uco.nose.business.assembler.dto.impl.IdentificationTypeDTOAssembler.getIdTypeDTOAssembler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,21 +26,21 @@ public final class UserDTOAssembler implements DTOAssembler<UserDTO, UserDomain>
 
 	@Override
 	public UserDTO toDTO(final UserDomain domain) {
-		var identificationTypeDtoTmp = getIdentificationTypeDTOAssembler().toDTO(domain.getIdentificationType());
+		var identificationTypeDtoTmp = getIdTypeDTOAssembler().toDTO(domain.getIdentificationType());
 		var cityDtoTmp = getCityDTOAssembler().toDTO(domain.getCity());
 		
 		var domainTmp = ObjectHelper.getDefault(domain, new UserDomain(UUIDHelper.getUUIDHelper().getDefault()));
-		return new UserDTO(domainTmp.getId(), domainTmp.getIdNumber(), domainTmp.getFirstName(), domainTmp.getSecondName(), domainTmp.getLastName(), domainTmp.getSecondLastName(),
-				domainTmp.getEmail(), domainTmp.getPhoneNumber(), identificationTypeDtoTmp, cityDtoTmp);
+		return new UserDTO(domainTmp.getId(), domainTmp.getIdentificationNumber(), domainTmp.getFirstName(), domainTmp.getSecondName(), domainTmp.getFirstLastName(), domainTmp.getSecondLastName(),
+				domainTmp.getEmail(), domainTmp.getMobilePhone(), identificationTypeDtoTmp, cityDtoTmp);
 	}
 
 	@Override
 	public UserDomain toDomain(UserDTO dto) {
-		var identificationTypeDomainTmp = getIdentificationTypeDTOAssembler().toDomain(dto.getIdentificationType());
+		var identificationTypeDomainTmp = getIdTypeDTOAssembler().toDomain(dto.getIdentificationType());
 		var cityDomainTmp = getCityDTOAssembler().toDomain(dto.getCity());
 		
 		var dtoTmp = ObjectHelper.getDefault(dto, new UserDTO(UUIDHelper.getUUIDHelper().getDefault()));
-		return new UserDomain(dtoTmp.getId(), dtoTmp.getIdNumber(), dtoTmp.getFirstName(), dtoTmp.getSecondName(), dtoTmp.getLastName(), dtoTmp.getSecondLastName(),
+		return new UserDomain(dtoTmp.getId(), dtoTmp.getIdentificationNumber(), dtoTmp.getFirstName(), dtoTmp.getSecondName(), dtoTmp.getFirstLastName(), dtoTmp.getSecondLastName(),
 				dtoTmp.getEmail(), dtoTmp.getMobilePhone(), identificationTypeDomainTmp , cityDomainTmp);
 	}
 

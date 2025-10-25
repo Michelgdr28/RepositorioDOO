@@ -10,7 +10,7 @@ import co.edu.uco.nose.crosscuting.exception.NoseException;
 import co.edu.uco.nose.data.dao.factory.DAOFactory;
 import co.edu.uco.nose.dto.UserDTO;
 
-public class UserFacadeImpl implements UserFacade {
+public final class UserFacadeImpl implements UserFacade {
 	
 private DAOFactory daoFactory;
 	

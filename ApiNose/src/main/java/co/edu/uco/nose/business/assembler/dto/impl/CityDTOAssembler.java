@@ -10,7 +10,6 @@ import co.edu.uco.nose.business.domain.CityDomain;
 import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.dto.CityDTO;
-import co.edu.uco.nose.dto.DepartmentDTO;
 
 public final class CityDTOAssembler implements DTOAssembler<CityDTO, CityDomain> {
 
@@ -37,7 +36,7 @@ public final class CityDTOAssembler implements DTOAssembler<CityDTO, CityDomain>
 		var dtoTmp = ObjectHelper.getDefault(dto, new CityDTO());
 		var departmentDomainTmp = getDepartmentDTOAssembler().toDomain(dtoTmp.getdepartment());
 		
-		return new CityDomain(dtoTmp.getId(), dtoTmp.getName(), departmentDomainTmp());
+		return new CityDomain(dtoTmp.getId(),dtoTmp.getName(),departmentDomainTmp);
 	}
 
 	@Override

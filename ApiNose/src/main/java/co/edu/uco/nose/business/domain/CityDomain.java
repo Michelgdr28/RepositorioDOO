@@ -22,7 +22,7 @@ public final class CityDomain extends Domain {
         setName(TextHelper.getDefault());
     }
 
-    public CityDomain(final UUID id, final DepartmentDomain department, final String name) {
+    public CityDomain(final UUID id, final String name,final DepartmentDomain department) {
         super(id);
         setDepartment(department);
         setName(name);

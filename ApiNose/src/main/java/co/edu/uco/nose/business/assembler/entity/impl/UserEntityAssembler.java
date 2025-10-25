@@ -27,22 +27,32 @@ public final class UserEntityAssembler implements EntityAssembler<UserEntity, Us
 	
 	@Override
 	public UserEntity toEntity(UserDomain domain) {
-		var idTypeEntityTmp = getIdTypeEntityAssembler().toEntity(domain.getIdentificationType());
+		var identificationTypeEntityTmp = getIdTypeEntityAssembler().toEntity(domain.getIdentificationType());
 		var cityEntityTmp = getCityEntityAssembler().toEntity(domain.getCity());
 		
 		var domainTmp = ObjectHelper.getDefault(domain, new UserDomain(UUIDHelper.getUUIDHelper().getDefault()));
 		return new UserEntity(domainTmp.getId(), domainTmp.getIdentificationNumber(), domainTmp.getFirstName(), domainTmp.getSecondName(), domainTmp.getFirstLastName(), domainTmp.getSecondLastName(),
-				domainTmp.getEmail(), domainTmp.getMobilePhone(), identificationTypeEntityTmp, cityEntityTmp);
+				cityEntityTmp,domainTmp.getEmail(), domainTmp.getMobilePhone(), identificationTypeEntityTmp,domainTmp.isEmailConfirmed(),domainTmp.isMobilePhoneConfirmed());
 	}
 
 	@Override
 	public UserDomain toDomain(UserEntity entity) {
-		var identificationTypeDomainTmp = getIdentificationTypeEntityAssembler().toDomain(entity.getIdentificationType());
+		var identificationTypeDomainTmp = getIdTypeEntityAssembler().toDomain(entity.getIdentificationType());
 		var cityDomainTmp = getCityEntityAssembler().toDomain(entity.getCity());
 		
 		var entityTmp = ObjectHelper.getDefault(entity, new UserEntity(UUIDHelper.getUUIDHelper().getDefault()));
-		return new UserDomain(entityTmp.getId(), entityTmp.getIdentificationNumber(), entityTmp.getFirstName(), entityTmp.getSecondName(), entityTmp.getFirstLastName(), entityTmp.getSecondLastName(),
-				entityTmp.getEmail(), entityTmp.getMobilePhone(), identificationTypeDomainTmp, cityDomainTmp);
+		return new UserDomain(entityTmp.getId(),  
+				identificationTypeDomainTmp,
+				entityTmp.getIdentificationNumber(), 
+				entityTmp.getFirstName(), 
+				entityTmp.getSecondName(), 
+				entityTmp.getFirstLastName(), 
+				entityTmp.getSecondLastName(),
+				cityDomainTmp,
+				entityTmp.getEmail(), 
+				entityTmp.getMobilePhone(),
+				entityTmp.isEmailConfirmed(),
+				entityTmp.isMobilePhoneConfirmed());
 	}
 
 	@Override

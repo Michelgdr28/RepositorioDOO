@@ -43,7 +43,7 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
             preparedStatement.setString(7, entity.getSecondLastName());
             preparedStatement.setObject(8, entity.getCity().getId());
             preparedStatement.setString(9, entity.getEmail());
-            preparedStatement.setString(10, entity.getPhoneNumber());
+            preparedStatement.setString(10, entity.getMobilePhone());
             preparedStatement.setBoolean(11, entity.isEmailConfirmed());
             preparedStatement.setBoolean(12, entity.isMobilePhoneConfirmed());
             preparedStatement.executeUpdate();
@@ -84,7 +84,7 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
             preparedStatement.setString(6, entity.getSecondLastName());
             preparedStatement.setObject(7, entity.getCity().getId());
             preparedStatement.setString(8, entity.getEmail());
-            preparedStatement.setString(9, entity.getPhoneNumber());
+            preparedStatement.setString(9, entity.getMobilePhone());
             preparedStatement.setBoolean(10, entity.isEmailConfirmed());
             preparedStatement.setBoolean(11, entity.isMobilePhoneConfirmed());
             preparedStatement.setObject(12, entity.getId());
@@ -190,7 +190,7 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
         addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getSecondName()), "u.segundoNombre = ?", filterEntityValidated.getSecondName());
         addCondition(conditions, parametersList, !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getCity().getId()), "u.ciudadResidencia = ?", filterEntityValidated.getCity().getId());
         addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getEmail()), "u.correoElectronico = ?", filterEntityValidated.getEmail());
-        addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getPhoneNumber()), "u.numeroTelefonoMovil = ?", filterEntityValidated.getPhoneNumber());
+        addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getMobilePhone()), "u.numeroTelefonoMovil = ?", filterEntityValidated.getMobilePhone());
         addCondition(conditions, parametersList, !filterEntityValidated.isEmailConfirmedIsDefaultValue(), "u.correoElectronicoConfirmado = ?", filterEntityValidated.isEmailConfirmed());
         addCondition(conditions, parametersList, !filterEntityValidated.isMobilePhoneConfirmedIsDefaultValue(), "u.numeroTelefonoMovilConfirmado = ?", filterEntityValidated.isMobilePhoneConfirmed());
 
