@@ -14,12 +14,12 @@ public final class CountryEntity  {
 		setName(TextHelper.getDefault());
 	}
 	
-	public CountryEntity(UUID id) {
+	public CountryEntity(final UUID id) {
 		setId(id);
 		setName(TextHelper.getDefault());
 	}
 	
-	public CountryEntity(UUID id, final String name) {
+	public CountryEntity(final UUID id, final String name) {
 		setId(id);
 		setName(name);
 	}

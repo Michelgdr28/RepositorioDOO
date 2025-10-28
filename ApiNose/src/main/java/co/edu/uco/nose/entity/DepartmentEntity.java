@@ -2,6 +2,7 @@ package co.edu.uco.nose.entity;
 
 import java.util.UUID;
 
+import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
@@ -33,7 +34,7 @@ public final class DepartmentEntity {
 	}
 	
 	public void setId(final UUID id) {
-		this.id = (id == null) ? UUIDHelper.getUUIDHelper().getDefault() : id;
+		this.id = UUIDHelper.getUUIDHelper().getDefault(id);
 	}
 
 	public String getName() {
@@ -49,6 +50,6 @@ public final class DepartmentEntity {
 	}
 
 	public void setCountry(final CountryEntity country) {
-		this.country = (country == null) ? new CountryEntity() : country;
+		this.country = ObjectHelper.getDefault(country, new CountryEntity());
 	}
 }

@@ -29,9 +29,8 @@ public final class UUIDHelper {
 		return UUID.randomUUID();
 	}
 
-	public boolean isDefaultUUID(UUID id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isDefaultUUID(final UUID value) {
+		return getDefault().equals(getDefault(value));
 	}
 
 }

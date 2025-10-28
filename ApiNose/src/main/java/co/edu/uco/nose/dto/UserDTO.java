@@ -52,7 +52,7 @@ public class UserDTO {
 	}
 	
 	public UserDTO(final UUID id, final String identificationNumber, final String firstName, final String secondName, final String firstLastName, final String secondLastName, final String email, final String mobilePhone,
-			final IdentificationTypeDTO identificationType, final CityDTO city) {
+			final IdentificationTypeDTO identificationType, final CityDTO city, final boolean emailConfirmed, final boolean mobilePhoneConfirmed) {
 		setId(id);
 		setIdentificationNumber(identificationNumber);
 		setFirstName(firstName);
@@ -63,8 +63,8 @@ public class UserDTO {
 		setMobilePhone(mobilePhone);
 		setIdentificationType(identificationType);
 		setCity(city);
-		setEmailConfirmed(false);
-		setMobilePhoneConfirmed(false);
+		setEmailConfirmed(emailConfirmed);
+		setMobilePhoneConfirmed(mobilePhoneConfirmed);
 
 	}
 	

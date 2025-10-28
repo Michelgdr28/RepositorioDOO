@@ -32,7 +32,7 @@ public final class UserSqlServerDAO extends SqlConnection implements UserDAO {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
         final var sql = new StringBuilder();
         sql.append("INSERT INTO Usuario (id, tipoIdentificacion, numeroIdentificacion, primerNombre, segundoNombre, primerApellido, segundoApellido, ciudadResidencia, correoElectronico, numeroTelefonoMovil, correoElectronicoConfirmado, numeroTelefonoMovilConfirmado) ");
-        sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        sql.append("SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, entity.getId());
             preparedStatement.setObject(2, entity.getIdentificationType().getId());

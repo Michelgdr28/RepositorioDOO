@@ -31,7 +31,7 @@ public final class UserDTOAssembler implements DTOAssembler<UserDTO, UserDomain>
 		
 		var domainTmp = ObjectHelper.getDefault(domain, new UserDomain(UUIDHelper.getUUIDHelper().getDefault()));
 		return new UserDTO(domainTmp.getId(), domainTmp.getIdentificationNumber(), domainTmp.getFirstName(), domainTmp.getSecondName(), domainTmp.getFirstLastName(), domainTmp.getSecondLastName(),
-				domainTmp.getEmail(), domainTmp.getMobilePhone(), identificationTypeDtoTmp, cityDtoTmp);
+				domainTmp.getEmail(), domainTmp.getMobilePhone(), identificationTypeDtoTmp, cityDtoTmp,domainTmp.isEmailConfirmed(),domainTmp.isMobilePhoneConfirmed());
 	}
 
 	@Override
@@ -40,8 +40,8 @@ public final class UserDTOAssembler implements DTOAssembler<UserDTO, UserDomain>
 		var cityDomainTmp = getCityDTOAssembler().toDomain(dto.getCity());
 		
 		var dtoTmp = ObjectHelper.getDefault(dto, new UserDTO(UUIDHelper.getUUIDHelper().getDefault()));
-		return new UserDomain(dtoTmp.getId(), dtoTmp.getIdentificationNumber(), dtoTmp.getFirstName(), dtoTmp.getSecondName(), dtoTmp.getFirstLastName(), dtoTmp.getSecondLastName(),
-				dtoTmp.getEmail(), dtoTmp.getMobilePhone(), identificationTypeDomainTmp , cityDomainTmp);
+		return new UserDomain(dtoTmp.getId(),identificationTypeDomainTmp, dtoTmp.getIdentificationNumber(), dtoTmp.getFirstName(), dtoTmp.getSecondName(), dtoTmp.getFirstLastName(), dtoTmp.getSecondLastName(),
+				cityDomainTmp,dtoTmp.getEmail(), dtoTmp.getMobilePhone(),dtoTmp.isEmailConfirmed(),dtoTmp.isMobilePhoneConfirmed());
 	}
 
 	@Override

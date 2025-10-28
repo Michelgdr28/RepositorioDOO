@@ -2,6 +2,7 @@ package co.edu.uco.nose.entity;
 
 import java.util.UUID;
 
+import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
@@ -51,7 +52,7 @@ public final class CityEntity {
 	}
 
 	public void setDepartment(final DepartmentEntity department) {
-		this.department = (department == null) ? new DepartmentEntity() : department;
+		this.department = ObjectHelper.getDefault(department, new DepartmentEntity()) ;
 	}
 	
 }

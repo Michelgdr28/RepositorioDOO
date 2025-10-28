@@ -83,13 +83,14 @@ public class UserBusinessImpl implements UserBusiness {
 
 	@Override
 	public List<UserDomain> findAllUsers() {
+		try {
 			return findUsersByFilter(new UserDomain());
 		} catch (final Exception exception) {
 			var userMessage = MessagesEnum.USER_ERROR_USER_FIND_ALL.getContent();
 			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_ALL.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 		}
-	}
+}
 
 	@Override
 	public List<UserDomain> findUsersByFilter(UserDomain userFilters) {

@@ -48,10 +48,12 @@ public final class SqlServerDAOFactory extends DAOFactory {
 
             this.connection = DriverManager.getConnection(url, username, password);
 		} catch (final SQLException exception) {
-            var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS.getContent();
+			exception.printStackTrace();         
+			var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS.getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS.getContent();
             throw NoseException.create(exception,userMessage,technicalMessage);
         } catch (final Exception exception){
+        	exception.printStackTrace();
             var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS.getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);

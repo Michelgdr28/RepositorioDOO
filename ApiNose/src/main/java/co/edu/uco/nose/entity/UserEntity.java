@@ -20,6 +20,9 @@ public final class UserEntity {
 	private CityEntity city;
 	private boolean emailConfirmed;
 	private boolean mobilePhoneConfirmed;
+	private boolean emailConfirmedIsDefaultValue;
+	private boolean mobilePhoneConfirmedIsDefaultValue;
+
 	
 	public UserEntity() {
 		setId(UUIDHelper.getUUIDHelper().getDefault());
@@ -34,9 +37,12 @@ public final class UserEntity {
 		setCity(new CityEntity());
 		setEmailConfirmed(false);
 		setMobilePhoneConfirmed(false);
-	}
+		setEmailConfirmedIsDefaultValue(true);
+		setMobilePhoneConfirmedIsDefaultValue(true);
 	
-	public UserEntity(UUID id) {
+	}
+
+	public UserEntity(final UUID id) {
 		setId(id);
 		setIdentificationNumber(TextHelper.getDefault());
 		setFirstName(TextHelper.getDefault());
@@ -49,10 +55,13 @@ public final class UserEntity {
 		setCity(new CityEntity());
 		setEmailConfirmed(false);
 		setMobilePhoneConfirmed(false);
+		setEmailConfirmedIsDefaultValue(true);
+		setMobilePhoneConfirmedIsDefaultValue(true);
+		
 	}
-	
-	public UserEntity(UUID id, String identificationNumber, String firstName, String secondName, String firstLastName, String secondLastName, String email, String phoneNumber,
-			IdentificationTypeEntity identificationType, CityEntity city, boolean emailConfirmed, boolean mobilePhoneConfirmed) {
+
+	public UserEntity(final UUID id, final String identificationNumber, final String firstName, final String secondName, final String firstLastName, final String secondLastName, final String email, final String mobilePhone,
+			final IdentificationTypeEntity identificationType, final CityEntity city, final boolean emailConfirmed,final boolean mobilePhoneConfirmed) {
 		setId(id);
 		setIdentificationNumber(identificationNumber);
 		setFirstName(firstName);
@@ -63,8 +72,8 @@ public final class UserEntity {
 		setMobilePhone(mobilePhone);
 		setIdentificationType(identificationType);
 		setCity(city);
-		setEmailConfirmed(false);
-		setMobilePhoneConfirmed(false);
+		setEmailConfirmed(emailConfirmed);
+		setMobilePhoneConfirmed(mobilePhoneConfirmed);
 	}
 	
 	public UUID getId() {
@@ -136,7 +145,7 @@ public final class UserEntity {
 	}
 
 	public void setIdentificationType(IdentificationTypeEntity identificationType) {
-		this.identificationType = (ObjectHelper.isNull(identificationType) ? new IdentificationTypeEntity() : identificationType);
+		this.identificationType = ObjectHelper.getDefault(identificationType, new IdentificationTypeEntity());
 	}
 
 	public CityEntity getCity() {
@@ -144,36 +153,40 @@ public final class UserEntity {
 	}
 
 	public void setCity(CityEntity city) {
-		this.city = (ObjectHelper.isNull(city) ? new CityEntity() : city);
+		this.city = ObjectHelper.getDefault(city, new CityEntity());
 	}
 
 	public boolean isEmailConfirmed() {
 		return emailConfirmed;
 	}
 
-	public void setEmailConfirmed(boolean emailConfirmed) {
+	public void setEmailConfirmed(final boolean emailConfirmed) {
 		this.emailConfirmed = emailConfirmed;
+		setEmailConfirmedIsDefaultValue(false);
 	}
 
 	public boolean isMobilePhoneConfirmed() {
 		return mobilePhoneConfirmed;
 	}
 
-	public void setMobilePhoneConfirmed(boolean mobilePhoneConfirmed) {
+	public void setMobilePhoneConfirmed(final boolean mobilePhoneConfirmed) {
 		this.mobilePhoneConfirmed = mobilePhoneConfirmed;
+		setMobilePhoneConfirmedIsDefaultValue(false);
 	}
 
 	public boolean isEmailConfirmedIsDefaultValue() {
-		// TODO Auto-generated method stub
-		return false;
+		return emailConfirmedIsDefaultValue;
 	}
 
 	public boolean isMobilePhoneConfirmedIsDefaultValue() {
-		// TODO Auto-generated method stub
-		return false;
+		return mobilePhoneConfirmedIsDefaultValue;
 	}
 
-
-	
-	
+	public void setEmailConfirmedIsDefaultValue(final boolean emailConfirmedIsDefaultValue) {
+		this.emailConfirmedIsDefaultValue = emailConfirmedIsDefaultValue;
+	}
+	private void setMobilePhoneConfirmedIsDefaultValue(final boolean mobilePhoneConfirmedIsDefaultValue) {
+		this.mobilePhoneConfirmedIsDefaultValue = mobilePhoneConfirmedIsDefaultValue;
+	}
+		
 }

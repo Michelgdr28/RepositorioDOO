@@ -1,6 +1,8 @@
 package co.edu.uco.nose.dto;
 
 import java.util.UUID;
+
+import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
@@ -48,7 +50,7 @@ public class CityDTO {
 	}
 	
 	public void setDepartment(final DepartmentDTO department) {
-		this.department = department == null ? new DepartmentDTO() : department;
+		this.department = ObjectHelper.getDefault(department, new DepartmentDTO());
 	}
 
 }

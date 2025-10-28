@@ -32,7 +32,7 @@ public final class UserEntityAssembler implements EntityAssembler<UserEntity, Us
 		
 		var domainTmp = ObjectHelper.getDefault(domain, new UserDomain(UUIDHelper.getUUIDHelper().getDefault()));
 		return new UserEntity(domainTmp.getId(), domainTmp.getIdentificationNumber(), domainTmp.getFirstName(), domainTmp.getSecondName(), domainTmp.getFirstLastName(), domainTmp.getSecondLastName(),
-				cityEntityTmp,domainTmp.getEmail(), domainTmp.getMobilePhone(), identificationTypeEntityTmp,domainTmp.isEmailConfirmed(),domainTmp.isMobilePhoneConfirmed());
+				domainTmp.getEmail(), domainTmp.getMobilePhone(), identificationTypeEntityTmp,cityEntityTmp,domainTmp.isEmailConfirmed(),domainTmp.isMobilePhoneConfirmed());
 	}
 
 	@Override
