@@ -25,13 +25,6 @@ public class UserBusinessImpl implements UserBusiness {
 	@Override
 	public void registerNewUserInformation(UserDomain userDomain) {
 		
-		
-		// validar que la informacion sea consistente a nivel de tipo de dato,
-		//longitud,obligatoriedad, formato, rango, reglas propio de negocio etc
-		//validar que no exista previamente otro usuario con el mismo tipo y numero de identificacion
-		//validar que no exista previamente otro usuario con el mismo correo electronico
-		//validar que no exista previamente otro usuario con el mismo numero de telefono celular
-		//generar un identificador para el nuevo usuario asegurando que no exista 
 		var id = UUIDHelper.getUUIDHelper().generateNewUUID();
 		var userEntity = UserEntityAssembler.getUserEntityAssembler().toEntity(userDomain);
 		userEntity.setId(id);
@@ -215,4 +208,9 @@ public class UserBusinessImpl implements UserBusiness {
 	}
 }
 	
-
+// validar que la informacion sea consistente a nivel de tipo de dato,
+//longitud,obligatoriedad, formato, rango, reglas propio de negocio etc
+//validar que no exista previamente otro usuario con el mismo tipo y numero de identificacion
+//validar que no exista previamente otro usuario con el mismo correo electronico
+//validar que no exista previamente otro usuario con el mismo numero de telefono celular
+//generar un identificador para el nuevo usuario asegurando que no exista 

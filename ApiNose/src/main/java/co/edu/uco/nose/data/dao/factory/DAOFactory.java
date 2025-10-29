@@ -89,7 +89,7 @@ public abstract class DAOFactory {
 	public final void closeConnection() {
 		SqlConnectionHelper.ensureConnectionIsOpen(connection);
 		try {
-			connection.rollback();
+			connection.close();
 		} catch (final SQLException exception) {
 			var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_CLOSE.getContent();
 			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_CLOSE.getContent();

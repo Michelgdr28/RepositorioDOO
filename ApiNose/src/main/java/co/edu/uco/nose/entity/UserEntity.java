@@ -136,8 +136,8 @@ public final class UserEntity {
 		return mobilePhone;
 	}
 
-	public void setMobilePhone(String phoneNumber) {
-		this.mobilePhone = TextHelper.getDefaultWithTrim(phoneNumber);
+	public void setMobilePhone(String mobilePhone) {
+		this.mobilePhone = TextHelper.getDefaultWithTrim(mobilePhone);
 	}
 
 	public IdentificationTypeEntity getIdentificationType() {
