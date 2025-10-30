@@ -188,5 +188,15 @@ public final class UserEntity {
 	private void setMobilePhoneConfirmedIsDefaultValue(final boolean mobilePhoneConfirmedIsDefaultValue) {
 		this.mobilePhoneConfirmedIsDefaultValue = mobilePhoneConfirmedIsDefaultValue;
 	}
+
+	public int getMobilePhoneConfirmationCode() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getEmailConfirmationCode() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 		
 }

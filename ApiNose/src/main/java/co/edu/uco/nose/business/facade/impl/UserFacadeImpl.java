@@ -7,18 +7,12 @@ import co.edu.uco.nose.business.assembler.dto.impl.UserDTOAssembler;
 import co.edu.uco.nose.business.business.impl.UserBusinessImpl;
 import co.edu.uco.nose.business.facade.UserFacade;
 import co.edu.uco.nose.crosscuting.exception.NoseException;
+import co.edu.uco.nose.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.nose.data.dao.factory.DAOFactory;
 import co.edu.uco.nose.dto.UserDTO;
 
 public final class UserFacadeImpl implements UserFacade {
-	
-private DAOFactory daoFactory;
-	
-	public UserFacadeImpl() {
-		this.daoFactory = daoFactory.getFactory();
-	}
-	
-
+		
 	@Override
 	public void registerNewUserInformation(final UserDTO userDTO) {
 		var daoFactory = DAOFactory.getFactory();
@@ -37,8 +31,8 @@ private DAOFactory daoFactory;
 		}catch(final Exception exception) {
 			daoFactory.rollbackTransaction();
 			
-			var userMessage = "Se ha presentado un problema inesperado al registrar la información del nuevo usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema.";
-			var technicalMessage = "Se ha presentado un problema inesperado al registrar la información del nuevo usuario. Por favor revise el log de errores para mayor detalle.";
+			var userMessage = MessagesEnum.USER_ERROR_USER_CREATE.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_CREATE.getContent();
 			throw NoseException.create(exception, userMessage, technicalMessage);
 			
 		}finally {
@@ -59,8 +53,8 @@ private DAOFactory daoFactory;
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = "Se presentó un problema inesperado al eliminar la información del usuario.";
-            var technicalMessage = "Error inesperado en UserFacadeImpl.dropUserInformation al intentar eliminar usuario.";
+            var userMessage = MessagesEnum.USER_ERROR_USER_DELETE.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_DELETE.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
@@ -81,8 +75,8 @@ private DAOFactory daoFactory;
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = "Se presentó un problema inesperado al actualizar la información del usuario.";
-            var technicalMessage = "Error inesperado en UserFacadeImpl.updateUserInformation al intentar actualizar usuario.";
+            var userMessage =MessagesEnum.USER_ERROR_USER_UPDATE.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_UPDATE.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
@@ -100,8 +94,8 @@ private DAOFactory daoFactory;
         } catch (final NoseException exception) {
             throw exception;
         } catch (final Exception exception) {
-            var userMessage = "Se presentó un problema inesperado al consultar la lista de usuarios.";
-            var technicalMessage = "Error inesperado en UserFacadeImpl.findAllUsers.";
+            var userMessage = MessagesEnum.USER_ERROR_USER_FIND_ALL.getContent();
+            var technicalMessage =  MessagesEnum.TECHNICAL_ERROR_USER_FIND_ALL.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
@@ -120,8 +114,8 @@ private DAOFactory daoFactory;
         } catch (final NoseException exception) {
             throw exception;
         } catch (final Exception exception) {
-            var userMessage = "Se presentó un problema inesperado al consultar los usuarios por filtro.";
-            var technicalMessage = "Error inesperado en UserFacadeImpl.findUsersByFilter.";
+            var userMessage = MessagesEnum.USER_ERROR_USER_FIND_BY_FILTER.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_FIND_BY_FILTER.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
@@ -138,8 +132,8 @@ private DAOFactory daoFactory;
         } catch (final NoseException exception) {
             throw exception;
         } catch (final Exception exception) {
-            var userMessage = "Se presentó un problema inesperado al consultar la información específica del usuario.";
-            var technicalMessage = "Error inesperado en UserFacadeImpl.findSpecificUser.";
+            var userMessage = MessagesEnum.USER_ERROR_USER_NOT_FOUND.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_USER_NOT_FOUND.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
@@ -159,8 +153,8 @@ private DAOFactory daoFactory;
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = "Se presentó un problema inesperado al confirmar el número de celular del usuario.";
-            var technicalMessage = "Error inesperado en UserFacadeImpl.confirmMobileNumber.";
+            var userMessage =  MessagesEnum.USER_ERROR_CONFIRM_MOBILE.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_CONFIRM_MOBILE.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
@@ -180,8 +174,8 @@ private DAOFactory daoFactory;
 	            throw exception;
 	        } catch (final Exception exception) {
 	            daoFactory.rollbackTransaction();
-	            var userMessage = "Se presentó un problema inesperado al confirmar el correo electrónico del usuario.";
-	            var technicalMessage = "Error inesperado en UserFacadeImpl.confirmEmail.";
+	            var userMessage = MessagesEnum.USER_ERROR_CONFIRM_EMAIL.getContent();
+	            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_CONFIRM_EMAIL.getContent();
 	            throw NoseException.create(exception, userMessage, technicalMessage);
 	        } finally {
 	            daoFactory.closeConnection();
@@ -201,8 +195,8 @@ private DAOFactory daoFactory;
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = "Se presentó un problema inesperado al enviar la confirmación del número de celular.";
-            var technicalMessage = "Error inesperado en UserFacadeImpl.sendMobileNumberConfirmation.";
+            var userMessage = MessagesEnum.USER_ERROR_SEND_MOBILE_CONFIRMATION.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SEND_MOBILE_CONFIRMATION.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
@@ -222,8 +216,8 @@ private DAOFactory daoFactory;
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = "Se presentó un problema inesperado al enviar la confirmación de correo electrónico.";
-            var technicalMessage = "Error inesperado en UserFacadeImpl.sendEmailConfirmation.";
+            var userMessage = MessagesEnum.USER_ERROR_SEND_EMAIL_CONFIRMATION.getContent();
+            var technicalMessage =MessagesEnum.TECHNICAL_ERROR_SEND_EMAIL_CONFIRMATION.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();

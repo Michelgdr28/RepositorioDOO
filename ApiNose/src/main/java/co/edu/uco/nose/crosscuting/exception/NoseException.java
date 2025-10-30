@@ -10,7 +10,7 @@ public final class NoseException extends RuntimeException{
 	private String userMessage;
 	private String technicalMessage;
 	
-	public NoseException(final Throwable rootException,final  String userMessage, final String technicalMessage) {
+	private NoseException(final Throwable rootException,final  String userMessage, final String technicalMessage) {
 		setRootException(rootException);
 		setUserMessage(userMessage);
 		setTechnicalMessage(technicalMessage);
@@ -32,20 +32,21 @@ public final class NoseException extends RuntimeException{
 	public Throwable getRootException() {
 		return rootException;
 	}
-	public void setRootException(final Throwable rootException) {
+	private void setRootException(final Throwable rootException) {
 		this.rootException = ObjectHelper.getDefault(rootException, new Exception());
 	}
 	public String getUserMessage() {
 		return userMessage;
 	}
-	public void setUserMessage(final String userMessage) {
+	private void setUserMessage(final String userMessage) {
 		this.userMessage = TextHelper.getDefaultWithTrim(userMessage);
 	}
 	public String getTechnicalMessage() {
 		return technicalMessage;
 	}
-	public void setTechnicalMessage(final String technicalMessage) {
+	private void setTechnicalMessage(final String technicalMessage) {
 		this.technicalMessage = TextHelper.getDefaultWithTrim(technicalMessage);
+		;
 	}
 
 }

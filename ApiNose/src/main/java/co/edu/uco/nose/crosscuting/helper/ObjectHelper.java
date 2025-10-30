@@ -14,5 +14,10 @@ public final class ObjectHelper {
 		
 		return isNull (object) ? defaultValue : object;
 	}
+
+	public static ObjectHelper getObjectHelper() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
