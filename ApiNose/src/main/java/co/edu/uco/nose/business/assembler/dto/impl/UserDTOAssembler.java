@@ -1,7 +1,7 @@
 package co.edu.uco.nose.business.assembler.dto.impl;
 
 import static co.edu.uco.nose.business.assembler.dto.impl.CityDTOAssembler.getCityDTOAssembler;
-import static co.edu.uco.nose.business.assembler.dto.impl.IdentificationTypeDTOAssembler.getIdTypeDTOAssembler;
+import static co.edu.uco.nose.business.assembler.dto.impl.IdentificationTypeDTOAssembler.getIdentificationTypeDTOAssembler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public final class UserDTOAssembler implements DTOAssembler<UserDTO, UserDomain>
 
 	@Override
 	public UserDTO toDTO(final UserDomain domain) {
-		var identificationTypeDtoTmp = getIdTypeDTOAssembler().toDTO(domain.getIdentificationType());
+		var identificationTypeDtoTmp = getIdentificationTypeDTOAssembler().toDTO(domain.getIdentificationType());
 		var cityDtoTmp = getCityDTOAssembler().toDTO(domain.getCity());
 		
 		var domainTmp = ObjectHelper.getDefault(domain, new UserDomain(UUIDHelper.getUUIDHelper().getDefault()));
@@ -36,7 +36,7 @@ public final class UserDTOAssembler implements DTOAssembler<UserDTO, UserDomain>
 
 	@Override
 	public UserDomain toDomain(UserDTO dto) {
-		var identificationTypeDomainTmp = getIdTypeDTOAssembler().toDomain(dto.getIdentificationType());
+		var identificationTypeDomainTmp = getIdentificationTypeDTOAssembler().toDomain(dto.getIdentificationType());
 		var cityDomainTmp = getCityDTOAssembler().toDomain(dto.getCity());
 		
 		var dtoTmp = ObjectHelper.getDefault(dto, new UserDTO(UUIDHelper.getUUIDHelper().getDefault()));

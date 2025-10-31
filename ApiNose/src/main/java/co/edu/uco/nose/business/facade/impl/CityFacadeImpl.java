@@ -31,7 +31,7 @@ public final class CityFacadeImpl implements CityFacade {
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
 
-            var userMessage = MessagesEnum.FIND_ALL_CITIES_UNEXPECTED_ERROR.getTitle();
+            var userMessage = MessagesEnum.FIND_ALL_CITIES_UNEXPECTED_ERROR.getContent();
             var technicalMessage = MessagesEnum.FIND_ALL_CITIES_UNEXPECTED_ERROR.getContent();
             throw  NoseException.create(exception, userMessage, technicalMessage);
 
@@ -58,7 +58,7 @@ public final class CityFacadeImpl implements CityFacade {
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
 
-            var userMessage = MessagesEnum.FIND_CITIES_BY_FILTER_UNEXPECTED_ERROR.getTitle();
+            var userMessage = MessagesEnum.FIND_CITIES_BY_FILTER_UNEXPECTED_ERROR.getContent();
             var technicalMessage = MessagesEnum.FIND_CITIES_BY_FILTER_UNEXPECTED_ERROR.getContent()
                     + exception.getMessage();
             throw NoseException.create(exception,userMessage, technicalMessage);   
@@ -85,7 +85,7 @@ public final class CityFacadeImpl implements CityFacade {
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
 
-            var userMessage = MessagesEnum.FIND_SPECIFIC_CITY_UNEXPECTED_ERROR.getTitle();
+            var userMessage = MessagesEnum.FIND_SPECIFIC_CITY_UNEXPECTED_ERROR.getContent();
             var technicalMessage = MessagesEnum.FIND_SPECIFIC_CITY_UNEXPECTED_ERROR.getContent()
                     + exception.getMessage();
             throw NoseException.create(exception, userMessage, technicalMessage);

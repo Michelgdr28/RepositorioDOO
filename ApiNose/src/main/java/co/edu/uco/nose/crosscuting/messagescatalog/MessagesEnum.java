@@ -305,11 +305,32 @@ public enum MessagesEnum {
 			"Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema."), 
 	TECHNICAL_ERROR_SEND_EMAIL_CONFIRMATION("Error inesperado en UserFacadeImpl.sendEmailConfirmation.",
 			"Por favor verifique que la información proveniente de la base de datos sea correcta."), 
+	
 	SUCCESS_USER_LISTED("",""), 
 	
 	FIND_CITIES_BY_FILTER_UNEXPECTED_ERROR("",""), 
 	FIND_SPECIFIC_CITY_UNEXPECTED_ERROR("",""), 
 	FIND_ALL_CITIES_UNEXPECTED_ERROR("",""),
+	
+	FIND_ALL_COUNTRIES_UNEXPECTED_ERROR("Error inesperado al consultar todos los países.",
+			"Por favor verifique la informacion"), 
+	FIND_COUNTRIES_BY_FILTER_UNEXPECTED_ERROR("Error inesperado al consultar los países por filtro.",
+			"Por favor verifique la informacion de los filtros aplicados"), 
+	FIND_SPECIFIC_COUNTRY_UNEXPECTED_ERROR("Error inesperado al consultar un país en especifico.",
+			"Por favor verifique la informacion"), 
+	
+	FIND_ALL_DEPARTMENTS_UNEXPECTED_ERROR("",""), 
+	FIND_DEPARTMENTS_BY_FILTER_UNEXPECTED_ERROR("",""), 
+	FIND_SPECIFIC_DEPARTMENT_UNEXPECTED_ERROR("",""),
+	
+	FIND_ALL_IDENTIFICATION_TYPES_UNEXPECTED_ERROR("",""),
+	FIND_IDENTIFICATION_TYPES_BY_FILTER_UNEXPECTED_ERROR("",""),
+	FIND_SPECIFIC_IDENTIFICATION_TYPE_UNEXPECTED_ERROR("",""),
+
+	FIND_IDENTIFICATION_TYPES_BY_FILTER_SUCCESS("",""),
+	FIND_ALL_IDENTIFICATION_TYPES_SUCCESS("",""), 
+	FIND_SPECIFIC_IDENTIFICATION_TYPE_SUCCESS("",""),
+	
 	
 	
 

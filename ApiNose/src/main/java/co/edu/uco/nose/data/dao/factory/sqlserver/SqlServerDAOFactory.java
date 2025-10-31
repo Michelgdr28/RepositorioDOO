@@ -71,7 +71,7 @@ public final class SqlServerDAOFactory extends DAOFactory {
 	}
 
 	@Override
-	public IdentificationTypeDAO getIdentificationType() {
+	public IdentificationTypeDAO getIdentificationTypeDAO() {
 		return new IdentificationTypeSqlServerDAO(connection);
 	}
 

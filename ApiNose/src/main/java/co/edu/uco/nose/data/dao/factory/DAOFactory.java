@@ -33,7 +33,7 @@ public abstract class DAOFactory {
 
 	public abstract CountryDAO getCountryDAO();
 
-	public abstract IdentificationTypeDAO getIdentificationType();
+	public abstract IdentificationTypeDAO getIdentificationTypeDAO();
 
 	public abstract DepartmentDAO getDepartmentDAO();
 

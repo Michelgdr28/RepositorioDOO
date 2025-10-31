@@ -17,7 +17,7 @@ public final class IdentificationTypeDTOAssembler implements DTOAssembler<Identi
 		
 	}
 	
-	public static DTOAssembler<IdentificationTypeDTO, IdentificationTypeDomain> getIdTypeDTOAssembler() {
+	public static DTOAssembler<IdentificationTypeDTO, IdentificationTypeDomain> getIdentificationTypeDTOAssembler() {
 		return INSTANCE;
 	}
 	

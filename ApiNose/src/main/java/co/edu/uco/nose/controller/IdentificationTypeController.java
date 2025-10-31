@@ -1,9 +1,10 @@
 package co.edu.uco.nose.controller;
 
-import co.edu.uco.nose.business.facade.impl.CityFacadeImpl;
+import co.edu.uco.nose.business.facade.impl.IdentificationTypeFacadeImpl;
 import co.edu.uco.nose.controller.dto.Response;
 import co.edu.uco.nose.crosscuting.exception.NoseException;
-import co.edu.uco.nose.dto.CityDTO;
+import co.edu.uco.nose.crosscuting.messagescatalog.MessagesEnum;
+import co.edu.uco.nose.dto.IdentificationTypeDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -17,21 +18,20 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/cities")
-public class CityController {
+@RequestMapping("/api/v1/identification-types")
+public class IdentificationTypeController {
 
     @GetMapping
-    public ResponseEntity<Response<CityDTO>> findAllCities() {
+    public ResponseEntity<Response<IdentificationTypeDTO>> findAllIdentificationTypes() {
 
-        Response<CityDTO> responseObjectData = Response.createSuccededResponse();
+        Response<IdentificationTypeDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
+            var facade = new IdentificationTypeFacadeImpl();
 
-            var facade = new CityFacadeImpl();
-
-            responseObjectData.setData(facade.findAllCities());
-            responseObjectData.addMessages("All Cities filtered successfully");
+            responseObjectData.setData(facade.findAllIdentificationTypes());
+            responseObjectData.addMessages(MessagesEnum.FIND_ALL_IDENTIFICATION_TYPES_SUCCESS.getContent());
 
         } catch (final NoseException exception) {
             responseObjectData = Response.createFailedResponse();
@@ -40,29 +40,27 @@ public class CityController {
             exception.printStackTrace();
 
         } catch (final Exception exception) {
-            var userMessage = "Unexpected error";
+            var userMessage = MessagesEnum.FIND_ALL_IDENTIFICATION_TYPES_UNEXPECTED_ERROR.getContent();
             responseObjectData = Response.createFailedResponse();
             responseObjectData.addMessages(userMessage);
             responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             exception.printStackTrace();
         }
 
-        return new ResponseEntity<Response<CityDTO>>(responseObjectData, responseStatusCode);
+        return new ResponseEntity<Response<IdentificationTypeDTO>>(responseObjectData, responseStatusCode);
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<Response<CityDTO>> findSpecificCity (@PathVariable UUID id){
+    public ResponseEntity<Response<IdentificationTypeDTO>> findSpecificIdentificationType(@PathVariable UUID id) {
 
-        Response<CityDTO> responseObjectData = Response.createSuccededResponse();
+        Response<IdentificationTypeDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
+            var facade = new IdentificationTypeFacadeImpl();
 
-            var facade = new CityFacadeImpl();
-
-            responseObjectData.setData(List.of(facade.findSpecificCity(id)));
-            responseObjectData.addMessages("Find Specific City successfully");
+            responseObjectData.setData(List.of(facade.findSpecificIdentificationType(id)));
+            responseObjectData.addMessages(MessagesEnum.FIND_SPECIFIC_IDENTIFICATION_TYPE_SUCCESS.getContent());
 
         } catch (final NoseException exception) {
             responseObjectData = Response.createFailedResponse();
@@ -71,32 +69,34 @@ public class CityController {
             exception.printStackTrace();
 
         } catch (final Exception exception) {
-            var userMessage = "Unexpected error";
+            var userMessage = MessagesEnum.FIND_SPECIFIC_IDENTIFICATION_TYPE_UNEXPECTED_ERROR.getContent();
             responseObjectData = Response.createFailedResponse();
             responseObjectData.addMessages(userMessage);
             responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             exception.printStackTrace();
         }
-        return new ResponseEntity<Response<CityDTO>>(responseObjectData, responseStatusCode);
+
+        return new ResponseEntity<Response<IdentificationTypeDTO>>(responseObjectData, responseStatusCode);
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<Response<CityDTO>> findCitiesByFilter (
+    public ResponseEntity<Response<IdentificationTypeDTO>> findIdentificationTypesByFilter(
             @RequestParam(required = false) UUID id,
             @RequestParam(required = false) String name
     ) {
-        Response<CityDTO> responseObjectData = Response.createSuccededResponse();
+        Response<IdentificationTypeDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new CityFacadeImpl();
+            var facade = new IdentificationTypeFacadeImpl();
 
-            CityDTO filter = new CityDTO();
+            IdentificationTypeDTO filter = new IdentificationTypeDTO();
             filter.setId(id);
             filter.setName(name);
 
-            responseObjectData.setData(facade.findCitiesByFilter(filter));
-            responseObjectData.addMessages("Cities filtered succesfully");
+            responseObjectData.setData(facade.findIdentificationTypesByFilter(filter));
+            responseObjectData.addMessages(MessagesEnum.FIND_IDENTIFICATION_TYPES_BY_FILTER_SUCCESS.getContent());
+
         } catch (final NoseException exception) {
             responseObjectData = Response.createFailedResponse();
             responseObjectData.addMessages(exception.getUserMessage());
@@ -104,12 +104,14 @@ public class CityController {
             exception.printStackTrace();
 
         } catch (final Exception exception) {
-            var userMessage = "Unexpected error";
+            var userMessage = MessagesEnum.FIND_IDENTIFICATION_TYPES_BY_FILTER_UNEXPECTED_ERROR.getContent();
             responseObjectData = Response.createFailedResponse();
             responseObjectData.addMessages(userMessage);
             responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             exception.printStackTrace();
         }
-        return new ResponseEntity<Response<CityDTO>>(responseObjectData, responseStatusCode);
+
+        return new ResponseEntity<Response<IdentificationTypeDTO>>(responseObjectData, responseStatusCode);
     }
 }
+

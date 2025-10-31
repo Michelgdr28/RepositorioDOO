@@ -1,9 +1,9 @@
 package co.edu.uco.nose.controller;
 
-import co.edu.uco.nose.business.facade.impl.CityFacadeImpl;
+import co.edu.uco.nose.business.facade.impl.DepartmentFacadeImpl;
 import co.edu.uco.nose.controller.dto.Response;
 import co.edu.uco.nose.crosscuting.exception.NoseException;
-import co.edu.uco.nose.dto.CityDTO;
+import co.edu.uco.nose.dto.DepartmentDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -17,21 +17,21 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/cities")
-public class CityController {
+@RequestMapping("/api/v1/departments")
+public class DepartmentController {
 
     @GetMapping
-    public ResponseEntity<Response<CityDTO>> findAllCities() {
+    public ResponseEntity<Response<DepartmentDTO>> findAllDepartments() {
 
-        Response<CityDTO> responseObjectData = Response.createSuccededResponse();
+        Response<DepartmentDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
 
-            var facade = new CityFacadeImpl();
+            var facade = new DepartmentFacadeImpl();
 
-            responseObjectData.setData(facade.findAllCities());
-            responseObjectData.addMessages("All Cities filtered successfully");
+            responseObjectData.setData(facade.findAllDepartments());
+            responseObjectData.addMessages("All Departments filtered successfully");
 
         } catch (final NoseException exception) {
             responseObjectData = Response.createFailedResponse();
@@ -47,22 +47,22 @@ public class CityController {
             exception.printStackTrace();
         }
 
-        return new ResponseEntity<Response<CityDTO>>(responseObjectData, responseStatusCode);
+        return new ResponseEntity<Response<DepartmentDTO>>(responseObjectData, responseStatusCode);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<CityDTO>> findSpecificCity (@PathVariable UUID id){
+    public ResponseEntity<Response<DepartmentDTO>> findSpecificDepartment (@PathVariable UUID id){
 
-        Response<CityDTO> responseObjectData = Response.createSuccededResponse();
+        Response<DepartmentDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
 
-            var facade = new CityFacadeImpl();
+            var facade = new DepartmentFacadeImpl();
 
-            responseObjectData.setData(List.of(facade.findSpecificCity(id)));
-            responseObjectData.addMessages("Find Specific City successfully");
+            responseObjectData.setData(List.of(facade.findSpecificDepartment(id)));
+            responseObjectData.addMessages("Find Specific Department successfully");
 
         } catch (final NoseException exception) {
             responseObjectData = Response.createFailedResponse();
@@ -77,26 +77,26 @@ public class CityController {
             responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             exception.printStackTrace();
         }
-        return new ResponseEntity<Response<CityDTO>>(responseObjectData, responseStatusCode);
+        return new ResponseEntity<Response<DepartmentDTO>>(responseObjectData, responseStatusCode);
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<Response<CityDTO>> findCitiesByFilter (
+    public ResponseEntity<Response<DepartmentDTO>> findDepartmentsByFilter (
             @RequestParam(required = false) UUID id,
             @RequestParam(required = false) String name
     ) {
-        Response<CityDTO> responseObjectData = Response.createSuccededResponse();
+        Response<DepartmentDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new CityFacadeImpl();
+            var facade = new DepartmentFacadeImpl();
 
-            CityDTO filter = new CityDTO();
+            DepartmentDTO filter = new DepartmentDTO();
             filter.setId(id);
             filter.setName(name);
 
-            responseObjectData.setData(facade.findCitiesByFilter(filter));
-            responseObjectData.addMessages("Cities filtered succesfully");
+            responseObjectData.setData(facade.findDepartmentsByFilter(filter));
+            responseObjectData.addMessages("Departments filtered succesfully");
         } catch (final NoseException exception) {
             responseObjectData = Response.createFailedResponse();
             responseObjectData.addMessages(exception.getUserMessage());
@@ -110,6 +110,7 @@ public class CityController {
             responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             exception.printStackTrace();
         }
-        return new ResponseEntity<Response<CityDTO>>(responseObjectData, responseStatusCode);
+        return new ResponseEntity<Response<DepartmentDTO>>(responseObjectData, responseStatusCode);
     }
 }
+

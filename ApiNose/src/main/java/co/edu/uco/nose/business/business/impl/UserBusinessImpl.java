@@ -118,7 +118,7 @@ public final class UserBusinessImpl implements UserBusiness {
 		try {
 			var entity = daoFactory.getUserDAO().findById(id);
 
-			if (ObjectHelper.isNull(entity)) {
+			if (UUIDHelper.getUUIDHelper().isDefaultUUID(entity.getId())) {
 				throw NoseException.create(
 						MessagesEnum.USER_ERROR_USER_NOT_FOUND.getContent(),
 						MessagesEnum.TECHNICAL_ERROR_USER_NOT_FOUND.getContent());
