@@ -24,6 +24,7 @@ import co.edu.uco.nose.dto.CityDTO;
 import co.edu.uco.nose.dto.IdentificationTypeDTO;
 import co.edu.uco.nose.dto.UserDTO;
 
+
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -49,49 +50,52 @@ public class UserController {
 			responseStatusCode = HttpStatus.BAD_REQUEST;
 			exception.printStackTrace();
 		} catch (final Exception exception) {
+			var userMessage = "Unexpected error";
 			responseObjectData = Response.createFailedResponse();
-			responseObjectData.addMessages("Unexpected error");
+			responseObjectData.addMessages(userMessage);
 			responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 			exception.printStackTrace();
 		}
 
-		return new ResponseEntity<>(responseObjectData, responseStatusCode);
+		return new ResponseEntity<Response<UserDTO>>(responseObjectData, responseStatusCode);
 	}
 	@GetMapping("/filter")
-	public ResponseEntity<Response<UserDTO>> findByFilter(
-			@RequestParam(required = false) String name,
-			@RequestParam(required = false) String lastname,
-			@RequestParam(required = false) String email,
-			@RequestParam(required = false) String identificationNumber,
-			@RequestParam(required = false) UUID identificationTypeId,
-			@RequestParam(required = false) UUID cityId) {
+	public ResponseEntity<Response<UserDTO>> findUsersByFilter(
+			@RequestParam(required = false) UUID id,
+            @RequestParam(required = false) String identificationNumber,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String mobilePhone,
+            @RequestParam(required = false) UUID identificationTypeId,
+            @RequestParam(required = false) UUID CityId
+       ){
 
 		Response<UserDTO> responseObjectData = Response.createSuccededResponse();
 		HttpStatusCode responseStatusCode = HttpStatus.OK;
 
 		try {
-			var filter = new UserDTO();
-			filter.setFirstName(name);
-			filter.setFirstLastName(lastname);
-			filter.setEmail(email);
-			filter.setIdentificationNumber(identificationNumber);
-
-			if (identificationTypeId != null) {
-				var identificationType = new IdentificationTypeDTO();
-				identificationType.setId(identificationTypeId);
-				filter.setIdentificationType(identificationType);
-			}
-
-			if (cityId != null) {
-				var city = new CityDTO();
-				city.setId(cityId);
-				filter.setCity(city);
-			}
-
 			var facade = new UserFacadeImpl();
-			List<UserDTO> filteredUsers = facade.findUsersByFilter(filter);
-			responseObjectData.setData(filteredUsers);
-			responseObjectData.addMessages("Users filtered successfully!");
+			UserDTO filter = new UserDTO();
+            filter.setId(id);
+            filter.setIdentificationNumber(identificationNumber);
+            filter.setEmail(email);
+            filter.setFirstName(firstName);
+            filter.setMobilePhone(mobilePhone);
+
+            if (identificationTypeId != null) {
+                IdentificationTypeDTO idTypeFilter = new IdentificationTypeDTO();
+                idTypeFilter.setId(identificationTypeId);
+                filter.setIdentificationType(idTypeFilter);
+            }
+
+            if (CityId != null) {
+                CityDTO cityFilter = new CityDTO();
+                cityFilter.setId(CityId);
+                filter.setCity(cityFilter);
+            }
+
+            responseObjectData.setData(facade.findUsersByFilter(filter));
+            responseObjectData.addMessages("Users filtered succesfully");
 
 		} catch (final NoseException exception) {
 			responseObjectData = Response.createFailedResponse();
@@ -99,8 +103,9 @@ public class UserController {
 			responseStatusCode = HttpStatus.BAD_REQUEST;
 			exception.printStackTrace();
 		} catch (final Exception exception) {
+			var userMessage = "Unexpected error";
 			responseObjectData = Response.createFailedResponse();
-			responseObjectData.addMessages("Unexpected error while filtering users");
+			responseObjectData.addMessages(userMessage);
 			responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 			exception.printStackTrace();
 		}
@@ -108,98 +113,102 @@ public class UserController {
 		return new ResponseEntity<>(responseObjectData, responseStatusCode);
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<Response<UserDTO>> findUserById(@PathVariable UUID id) {
-		Response<UserDTO> response = Response.createSuccededResponse();
-		HttpStatusCode statusCode = HttpStatus.OK;
+	public ResponseEntity<Response<UserDTO>> findSpecificUser(@PathVariable UUID id) {
+		Response<UserDTO> responseObjectData = Response.createSuccededResponse();
+		HttpStatusCode responseStatusCode = HttpStatus.OK;
 
 		try {
 			var facade = new UserFacadeImpl();
-			var user = facade.findSpecificUser(id);
-			response.getData().add(user);
-			response.addMessages("User found successfully!");
+			
+			responseObjectData.setData(List.of(facade.findSpecificUser(id)));
+            responseObjectData.addMessages("User found successfully!");
+
 		} catch (final NoseException exception) {
-			response = Response.createFailedResponse();
-			response.addMessages(exception.getUserMessage());
-			statusCode = HttpStatus.BAD_REQUEST;
-			exception.printStackTrace();
+			responseObjectData = Response.createFailedResponse();
+            responseObjectData.addMessages(exception.getUserMessage());
+            responseStatusCode = HttpStatus.NOT_FOUND;
+            exception.printStackTrace();
 		} catch (final Exception exception) {
-			response = Response.createFailedResponse();
-			response.addMessages("Unexpected error while searching for user");
-			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-			exception.printStackTrace();
+			var userMessage = "Unexpected error While searching for User";
+            responseObjectData = Response.createFailedResponse();
+            responseObjectData.addMessages(userMessage);
+            responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+            exception.printStackTrace();
 		}
 
-		return new ResponseEntity<>(response, statusCode);
+		return new ResponseEntity<>(responseObjectData, responseStatusCode);
 	}
 
 	@PostMapping
 	public ResponseEntity<Response<UserDTO>> registerNewUserInformation(@RequestBody UserDTO user) {
-		Response<UserDTO> response = Response.createSuccededResponse();
-		HttpStatusCode statusCode = HttpStatus.CREATED;
+		Response<UserDTO> responseObjectData = Response.createSuccededResponse();
+		HttpStatusCode responseStatusCode = HttpStatus.CREATED;
 
 		try {
 			var facade = new UserFacadeImpl();
 			facade.registerNewUserInformation(user);
-			response.addMessages("User successfully registered!");
+			responseObjectData.addMessages("User successfully registered!");
 		} catch (final NoseException exception) {
-			response = Response.createFailedResponse();
-			response.addMessages(exception.getUserMessage());
-			statusCode = HttpStatus.BAD_REQUEST;
+			responseObjectData = Response.createFailedResponse();
+			responseObjectData.addMessages(exception.getUserMessage());
+			responseStatusCode = HttpStatus.BAD_REQUEST;
 			exception.printStackTrace();
 		} catch (final Exception exception) {
-			response = Response.createFailedResponse();
-			response.addMessages("Unexpected error while registering user");
-			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+			responseObjectData = Response.createFailedResponse();
+			responseObjectData.addMessages("Unexpected error while registering user");
+			responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 			exception.printStackTrace();
 		}
 
-		return new ResponseEntity<>(response, statusCode);
+		return new ResponseEntity<>(responseObjectData, responseStatusCode);
 	}
 	@PutMapping("/{id}")
 	public ResponseEntity<Response<UserDTO>> updateUserInformation(@PathVariable UUID id, @RequestBody UserDTO user) {
-		Response<UserDTO> response = Response.createSuccededResponse();
-		HttpStatusCode statusCode = HttpStatus.OK;
+		Response<UserDTO> responseObjectData = Response.createSuccededResponse();
+		HttpStatusCode responseStatusCode = HttpStatus.OK;
 
 		try {
 			var facade = new UserFacadeImpl();
 			facade.updateUserInformation(id, user);
-			response.addMessages("User updated successfully!");
+			responseObjectData.addMessages("User updated successfully!");
 		} catch (final NoseException exception) {
-			response = Response.createFailedResponse();
-			response.addMessages(exception.getUserMessage());
-			statusCode = HttpStatus.BAD_REQUEST;
+			responseObjectData = Response.createFailedResponse();
+			responseObjectData.addMessages(exception.getUserMessage());
+			responseStatusCode = HttpStatus.BAD_REQUEST;
 			exception.printStackTrace();
 		} catch (final Exception exception) {
-			response = Response.createFailedResponse();
-			response.addMessages("Unexpected error while updating user");
-			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+			var userMessage =("Unexpected error while updating user");
+			responseObjectData = Response.createFailedResponse();
+			responseObjectData.addMessages(userMessage);
+			responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 			exception.printStackTrace();
 		}
 
-		return new ResponseEntity<>(response, statusCode);
+		return new ResponseEntity<>(responseObjectData, responseStatusCode);
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Response<UserDTO>> dropUserInformation(@PathVariable UUID id) {
-		Response<UserDTO> response = Response.createSuccededResponse();
-		HttpStatusCode statusCode = HttpStatus.OK;
+		Response<UserDTO> responseObjectData = Response.createSuccededResponse();
+		HttpStatusCode responseStatusCode = HttpStatus.OK;
 
 		try {
 			var facade = new UserFacadeImpl();
 			facade.dropUserInformation(id);
-			response.addMessages("User deleted successfully!");
+			responseObjectData.addMessages("User deleted successfully!");
 		} catch (final NoseException exception) {
-			response = Response.createFailedResponse();
-			response.addMessages(exception.getUserMessage());
-			statusCode = HttpStatus.BAD_REQUEST;
+			responseObjectData = Response.createFailedResponse();
+			responseObjectData.addMessages(exception.getUserMessage());
+			responseStatusCode = HttpStatus.BAD_REQUEST;
 			exception.printStackTrace();
 		} catch (final Exception exception) {
-			response = Response.createFailedResponse();
-			response.addMessages("Unexpected error while deleting user");
-			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+            var userMessage = ("Unexpected error while deleting user");
+			responseObjectData = Response.createFailedResponse();
+			responseObjectData.addMessages(userMessage);
+			responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 			exception.printStackTrace();
 		}
 
-		return new ResponseEntity<>(response, statusCode);
+		return new ResponseEntity<>(responseObjectData, responseStatusCode);
 	}
 }
 

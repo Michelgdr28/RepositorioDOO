@@ -304,7 +304,12 @@ public enum MessagesEnum {
 	USER_ERROR_SEND_EMAIL_CONFIRMATION("Se presentó un problema inesperado al enviar la confirmación de correo electrónico.",
 			"Por favor intente de nuevo y si el problema persiste contacte al administrador del sistema."), 
 	TECHNICAL_ERROR_SEND_EMAIL_CONFIRMATION("Error inesperado en UserFacadeImpl.sendEmailConfirmation.",
-			"Por favor verifique que la información proveniente de la base de datos sea correcta."),
+			"Por favor verifique que la información proveniente de la base de datos sea correcta."), 
+	SUCCESS_USER_LISTED("",""), 
+	
+	FIND_CITIES_BY_FILTER_UNEXPECTED_ERROR("",""), 
+	FIND_SPECIFIC_CITY_UNEXPECTED_ERROR("",""), 
+	FIND_ALL_CITIES_UNEXPECTED_ERROR("",""),
 	
 	
 
