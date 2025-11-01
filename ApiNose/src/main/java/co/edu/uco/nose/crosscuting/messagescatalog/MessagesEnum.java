@@ -331,9 +331,6 @@ public enum MessagesEnum {
 	FIND_ALL_IDENTIFICATION_TYPES_SUCCESS("",""), 
 	FIND_SPECIFIC_IDENTIFICATION_TYPE_SUCCESS("",""),
 	
-	
-	
-
 	;
 
 	private String title;
